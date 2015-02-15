@@ -1,21 +1,14 @@
-#include "mindmapwidget.h"
-
 #include <QPainter>
+#include <qevent.h>
+
+#include "mindmapwidget.h"
+#include "common.h"
 
 MindMapWidget::MindMapWidget(QWidget *parent)
     : QWidget(parent)
 {
-    //setPalette(Qt::transparent);
-    //setAttribute(Qt::WA_TransparentForMouseEvents);
-    if (!m_settings.contains(BGCOLOR_KEY)) {
-        m_settings.setValue(BGCOLOR_KEY, QColor(Qt::white));
-    }
-
-    QPalette pal(palette());
-    // set black background
-    pal.setColor(QPalette::Background, m_settings.value(BGCOLOR_KEY).value<QColor>());
-    setAutoFillBackground(true);
-    setPalette(pal);
+    m_bgColor = m_settings.value(BGCOLOR_KEY, QColor(Qt::white)).value<QColor>();
+    m_doubleBuffer = new QPixmap(size());
 }
 
 MindMapWidget::~MindMapWidget()
@@ -23,16 +16,28 @@ MindMapWidget::~MindMapWidget()
 
 }
 
+void MindMapWidget::resizeEvent(QResizeEvent *event) {
+    QSize newSize = event->size().expandedTo(m_doubleBuffer->size());
+
+    if (m_doubleBuffer->size() != newSize){
+        safe_delete(m_doubleBuffer);
+        m_doubleBuffer = new QPixmap(newSize);
+    }
+}
+
 void MindMapWidget::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(Qt::red));
-    painter.drawLine(width()/8, height()/8, 7*width()/8, 7*height()/8);
-    painter.drawLine(width()/8, 7*height()/8, 7*width()/8, height()/8);
-    //painter.moveTo(width()/8, height()/8);
+    QPainter dbPainter(m_doubleBuffer);
+    dbPainter.fillRect(rect(), QBrush(m_bgColor));
+    dbPainter.setRenderHint(QPainter::Antialiasing);
+    dbPainter.setPen(QPen(Qt::red));
+    dbPainter.drawLine(width()/8, height()/8, 7*width()/8, 7*height()/8);
+    dbPainter.drawLine(width()/8, 7*height()/8, 7*width()/8, height()/8);
     QPainterPath myPath;
     myPath.moveTo(width()/8, height()/8);
     myPath.cubicTo(width()/8, 7*height()/8, 7*width()/8, height()/8, 7*width()/8, 7*height()/8);
-    painter.drawPath(myPath);
+    dbPainter.drawPath(myPath);
+
+    QPainter painter(this);
+    painter.drawPixmap(0,0, *m_doubleBuffer);
 }
 

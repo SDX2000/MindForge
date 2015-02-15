@@ -12,12 +12,16 @@ public:
     ~MindMapWidget();
 protected:
     void paintEvent(QPaintEvent *event);
+    void resizeEvent(QResizeEvent *event);
+
 signals:
 
 public slots:
 private:
     QSettings   m_settings;
-    const char * BGCOLOR_KEY = "mindmap/bgcolor";
+    QPixmap     *m_doubleBuffer;
+    QColor      m_bgColor;
+    const char  *BGCOLOR_KEY = "mindmap/bgcolor";
 };
 
 #endif // MINDMAPWIDGET_H
