@@ -7,6 +7,15 @@ MindMapWidget::MindMapWidget(QWidget *parent)
 {
     //setPalette(Qt::transparent);
     //setAttribute(Qt::WA_TransparentForMouseEvents);
+    if (!m_settings.contains(BGCOLOR_KEY)) {
+        m_settings.setValue(BGCOLOR_KEY, QColor(Qt::white));
+    }
+
+    QPalette pal(palette());
+    // set black background
+    pal.setColor(QPalette::Background, m_settings.value(BGCOLOR_KEY).value<QColor>());
+    setAutoFillBackground(true);
+    setPalette(pal);
 }
 
 MindMapWidget::~MindMapWidget()

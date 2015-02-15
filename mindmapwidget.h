@@ -1,6 +1,7 @@
 #ifndef MINDMAPWIDGET_H
 #define MINDMAPWIDGET_H
 
+#include <QSettings>
 #include <QWidget>
 
 class MindMapWidget : public QWidget
@@ -14,6 +15,9 @@ protected:
 signals:
 
 public slots:
+private:
+    QSettings   m_settings;
+    const char * BGCOLOR_KEY = "mindmap/bgcolor";
 };
 
 #endif // MINDMAPWIDGET_H

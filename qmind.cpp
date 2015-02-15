@@ -10,6 +10,8 @@ QMind::QMind(QWidget *parent)
 {
     m_ui->setupUi(this);
     setCentralWidget(&m_mindMapWidget);
+
+
 }
 
 QMind::~QMind()
