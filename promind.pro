@@ -12,11 +12,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    promind.cpp \
-    mmwidget.cpp
+    mmwidget.cpp \
+    promindwindow.cpp
 
-HEADERS  += promind.h \
+HEADERS  += \
     mmwidget.h \
-    common.h
+    common.h \
+    promindwindow.h
 
 FORMS    += promind.ui

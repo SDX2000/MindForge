@@ -1,10 +1,10 @@
 #include <QPaintEvent>
 
-#include "promind.h"
+#include "promindwindow.h"
 #include "ui_promind.h"
 #include "common.h"
 
-ProMind::ProMind(QWidget *parent)
+ProMindWindow::ProMindWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::ProMind)
 {
@@ -14,13 +14,13 @@ ProMind::ProMind(QWidget *parent)
 
 }
 
-ProMind::~ProMind()
+ProMindWindow::~ProMindWindow()
 {
     safe_delete(m_ui);
 }
 
 
-void ProMind::resizeEvent(QResizeEvent *event) {
+void ProMindWindow::resizeEvent(QResizeEvent *event) {
     m_mindMapWidget.resize(event->size());
     event->accept();
 }

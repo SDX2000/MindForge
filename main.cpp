@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "promind.h"
+#include "promindwindow.h"
 #include "mmwidget.h"
 
 
@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("sdxtech.net");
     QCoreApplication::setApplicationName("ProMind");
 
-    ProMind w;
+    ProMindWindow w;
     w.show();
     return a.exec();
 }
