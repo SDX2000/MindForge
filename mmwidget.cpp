@@ -4,19 +4,20 @@
 #include "mmwidget.h"
 #include "common.h"
 
-MindMapWidget::MindMapWidget(QWidget *parent)
+MmWidget::MmWidget(MmNodeData root, QWidget *parent)
     : QWidget(parent)
+    , m_root(root)
 {
     m_bgColor = m_settings.value(BGCOLOR_KEY, QColor(Qt::white)).value<QColor>();
     m_doubleBuffer = new QPixmap(size());
 }
 
-MindMapWidget::~MindMapWidget()
+MmWidget::~MmWidget()
 {
 
 }
 
-void MindMapWidget::resizeEvent(QResizeEvent *event) {
+void MmWidget::resizeEvent(QResizeEvent *event) {
     QSize newSize = event->size().expandedTo(m_doubleBuffer->size());
 
     if (m_doubleBuffer->size() != newSize){
@@ -25,7 +26,7 @@ void MindMapWidget::resizeEvent(QResizeEvent *event) {
     }
 }
 
-void MindMapWidget::paintEvent(QPaintEvent *event) {
+void MmWidget::paintEvent(QPaintEvent *event) {
     QPainter dbPainter(m_doubleBuffer);
     dbPainter.fillRect(rect(), QBrush(m_bgColor));
     dbPainter.setRenderHint(QPainter::Antialiasing);

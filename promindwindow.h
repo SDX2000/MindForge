@@ -14,14 +14,14 @@ class ProMindWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit ProMindWindow(QWidget *parent = 0);
+    explicit ProMindWindow(MmNodeData root, QWidget *parent = 0);
     ~ProMindWindow();
 
 protected:
     void resizeEvent(QResizeEvent *event);
 private:
     Ui::ProMind       *m_ui;
-    MindMapWidget   m_mindMapWidget;
+    MmWidget   m_mindMapWidget;
     QSettings       m_settings;
 };
 

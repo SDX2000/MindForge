@@ -4,14 +4,13 @@
 #include "ui_promind.h"
 #include "common.h"
 
-ProMindWindow::ProMindWindow(QWidget *parent)
+ProMindWindow::ProMindWindow(MmNodeData root, QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::ProMind)
+    , m_mindMapWidget(root)
 {
     m_ui->setupUi(this);
     setCentralWidget(&m_mindMapWidget);
-
-
 }
 
 ProMindWindow::~ProMindWindow()
