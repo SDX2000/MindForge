@@ -1,7 +1,7 @@
 #include <QPainter>
 #include <qevent.h>
 
-#include "mindmapwidget.h"
+#include "mmwidget.h"
 #include "common.h"
 
 MindMapWidget::MindMapWidget(QWidget *parent)

@@ -7,16 +7,16 @@
 QT       += core gui widgets
 
 
-TARGET = QMind
+TARGET = promind
 TEMPLATE = app
 
 
-SOURCES += main.cpp             \
-           qmind.cpp            \
-           mindmapwidget.cpp
+SOURCES += main.cpp \
+    promind.cpp \
+    mmwidget.cpp
 
-HEADERS  += qmind.h             \
-            mindmapwidget.h \
+HEADERS  += promind.h \
+    mmwidget.h \
     common.h
 
-FORMS    += qmind.ui
+FORMS    += promind.ui

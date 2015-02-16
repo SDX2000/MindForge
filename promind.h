@@ -1,28 +1,28 @@
-#ifndef QMIND_H
-#define QMIND_H
+#ifndef PROMIND_H
+#define PROMIND_H
 
 #include <QMainWindow>
 #include <QSettings>
-#include "mindmapwidget.h"
+#include "mmwidget.h"
 
 namespace Ui {
-class QMind;
+class ProMind;
 }
 
-class QMind : public QMainWindow
+class ProMind : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit QMind(QWidget *parent = 0);
-    ~QMind();
+    explicit ProMind(QWidget *parent = 0);
+    ~ProMind();
 
 protected:
     void resizeEvent(QResizeEvent *event);
 private:
-    Ui::QMind       *m_ui;
+    Ui::ProMind       *m_ui;
     MindMapWidget   m_mindMapWidget;
     QSettings       m_settings;
 };
 
-#endif // QMIND_H
+#endif // PROMIND_H

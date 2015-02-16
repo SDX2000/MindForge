@@ -1,7 +1,7 @@
 #include <QApplication>
 
-#include "qmind.h"
-#include "mindmapwidget.h"
+#include "promind.h"
+#include "mmwidget.h"
 
 
 int main(int argc, char *argv[])
@@ -10,9 +10,9 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("SDXTECH");
     QCoreApplication::setOrganizationDomain("sdxtech.net");
-    QCoreApplication::setApplicationName("QMind");
+    QCoreApplication::setApplicationName("ProMind");
 
-    QMind w;
+    ProMind w;
     w.show();
     return a.exec();
 }
