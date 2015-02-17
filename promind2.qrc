@@ -1,0 +1,27 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Open_Sans/OpenSans-ExtraBold.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-ExtraBoldItalic.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-Italic.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-Light.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-LightItalic.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-Regular.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-Semibold.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-SemiboldItalic.ttf</file>
+        <file>fonts/Open_Sans_Condensed/OpenSans-CondBold.ttf</file>
+        <file>fonts/Open_Sans_Condensed/OpenSans-CondLight.ttf</file>
+        <file>fonts/Open_Sans_Condensed/OpenSans-CondLightItalic.ttf</file>
+        <file>fonts/PT_Mono/PTM55FT.ttf</file>
+        <file>fonts/PT_Serif/PT_Serif-Web-Bold.ttf</file>
+        <file>fonts/PT_Serif/PT_Serif-Web-BoldItalic.ttf</file>
+        <file>fonts/PT_Serif/PT_Serif-Web-Italic.ttf</file>
+        <file>fonts/PT_Serif/PT_Serif-Web-Regular.ttf</file>
+        <file>fonts/PT_Serif_Caption/PT_Serif-Caption-Web-Italic.ttf</file>
+        <file>fonts/PT_Serif_Caption/PT_Serif-Caption-Web-Regular.ttf</file>
+        <file>fonts/Source_Sans_Pro/SourceSansPro-Black.ttf</file>
+        <file>fonts/Source_Sans_Pro/SourceSansPro-BlackItalic.ttf</file>
+        <file>fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf</file>
+        <file>fonts/Source_Sans_Pro/SourceSansPro-BoldItalic.ttf</file>
+        <file>fonts/Source_Sans_Pro/SourceSansPro-ExtraLight.ttf</file>
+    </qresource>
+</RCC>

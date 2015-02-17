@@ -22,4 +22,10 @@ HEADERS  += \
     promindwindow.h \
     mmnodedata.h
 
-FORMS    += promind.ui
+FORMS    += \
+    promind.ui
+
+RESOURCES += \
+    promind.qrc \
+    promind2.qrc \
+    promind3.qrc

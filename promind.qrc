@@ -1,2 +1,27 @@
-<RCC/>
-
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Droid_Sans/DroidSans-Bold.ttf</file>
+        <file>fonts/Droid_Sans/DroidSans.ttf</file>
+        <file>fonts/Droid_Sans_Mono/DroidSansMono.ttf</file>
+        <file>fonts/Droid_Serif/DroidSerif-Bold.ttf</file>
+        <file>fonts/Droid_Serif/DroidSerif-BoldItalic.ttf</file>
+        <file>fonts/Droid_Serif/DroidSerif-Italic.ttf</file>
+        <file>fonts/Droid_Serif/DroidSerif.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-Bold.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-BoldItalic.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-Italic.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-Light.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-LightItalic.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-Regular.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-SemiBold.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-SemiBoldItalic.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-Thin.ttf</file>
+        <file>fonts/Josefin_Sans/JosefinSans-ThinItalic.ttf</file>
+        <file>fonts/Noto_Serif/NotoSerif-Bold.ttf</file>
+        <file>fonts/Noto_Serif/NotoSerif-BoldItalic.ttf</file>
+        <file>fonts/Noto_Serif/NotoSerif-Italic.ttf</file>
+        <file>fonts/Noto_Serif/NotoSerif-Regular.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-Bold.ttf</file>
+        <file>fonts/Open_Sans/OpenSans-BoldItalic.ttf</file>
+    </qresource>
+</RCC>

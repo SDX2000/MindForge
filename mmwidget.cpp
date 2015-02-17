@@ -4,12 +4,11 @@
 #include "mmwidget.h"
 #include "common.h"
 
-MmWidget::MmWidget(MmNodeData root, QWidget *parent)
+MmWidget::MmWidget(MmNodeData data, QWidget *parent)
     : QWidget(parent)
-    , m_root(root)
+    , m_data(data)
 {
-    m_bgColor = m_settings.value(BGCOLOR_KEY, QColor(Qt::white)).value<QColor>();
-    m_doubleBuffer = new QPixmap(size());
+
 }
 
 MmWidget::~MmWidget()
@@ -17,28 +16,28 @@ MmWidget::~MmWidget()
 
 }
 
-void MmWidget::resizeEvent(QResizeEvent *event) {
-    QSize newSize = event->size().expandedTo(m_doubleBuffer->size());
+void MmWidget::setBackGround(QColor color)
+{
+    QPalette p(palette());
+    p.setColor(QPalette::Background, color);
+    setPalette(p);
+}
 
-    if (m_doubleBuffer->size() != newSize){
-        safe_delete(m_doubleBuffer);
-        m_doubleBuffer = new QPixmap(newSize);
-    }
+void MmWidget::resizeEvent(QResizeEvent *event) {
+
 }
 
 void MmWidget::paintEvent(QPaintEvent *event) {
-    QPainter dbPainter(m_doubleBuffer);
-    dbPainter.fillRect(rect(), QBrush(m_bgColor));
-    dbPainter.setRenderHint(QPainter::Antialiasing);
-    dbPainter.setPen(QPen(Qt::red));
-    dbPainter.drawLine(width()/8, height()/8, 7*width()/8, 7*height()/8);
-    dbPainter.drawLine(width()/8, 7*height()/8, 7*width()/8, height()/8);
-    QPainterPath myPath;
-    myPath.moveTo(width()/8, height()/8);
-    myPath.cubicTo(width()/8, 7*height()/8, 7*width()/8, height()/8, 7*width()/8, 7*height()/8);
-    dbPainter.drawPath(myPath);
-
     QPainter painter(this);
-    painter.drawPixmap(0,0, *m_doubleBuffer);
+    //Paint background
+    painter.fillRect(rect(), palette().background());
+
+
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::black));
+    painter.setBrush(QBrush(Qt::black));
+
+    painter.drawText(0, 0, width(), height(),Qt::AlignVCenter | Qt::TextWrapAnywhere, m_data.getText());
+
 }
 

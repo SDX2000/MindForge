@@ -1,6 +1,7 @@
 #ifndef PROMIND_H
 #define PROMIND_H
 
+#include <QFontDatabase>
 #include <QMainWindow>
 #include <QSettings>
 #include "mmwidget.h"
@@ -19,10 +20,17 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *event);
+
 private:
-    Ui::ProMind       *m_ui;
-    MmWidget   m_mindMapWidget;
+    void addFonts();
+
+private:
+    Ui::ProMind*    m_ui;
+    MmWidget        m_mindMapWidget;
     QSettings       m_settings;
+    QColor          m_bgColor;
+    QFontDatabase   m_fontDb;
+    const char*     BGCOLOR_KEY = "mindmap/bgcolor";
 };
 
 #endif // PROMIND_H
