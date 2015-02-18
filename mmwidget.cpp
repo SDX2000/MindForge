@@ -5,6 +5,7 @@
 
 #include "mmwidget.h"
 #include "common.h"
+#include "mmnodewidget.h"
 
 MmWidget::MmWidget(MmNodeData data, QWidget *parent)
     : QWidget(parent)
@@ -27,9 +28,13 @@ void MmWidget::setData(MmNodeData nodeData)
 QLayout* MmWidget::createNodeWidgets(MmNodeData &nodeData)
 {
     QHBoxLayout *myLayout = new QHBoxLayout();
+    myLayout->setSizeConstraint(QLayout::SetFixedSize);
+    //myLayout->addWidget(new MmNodeWidget(nodeData));
     myLayout->addWidget(new QLabel(nodeData.getText()));
 
     QVBoxLayout *childNodeContainer = new QVBoxLayout();
+    childNodeContainer->setSizeConstraint(QLayout::SetMinimumSize);
+
     foreach (MmNodeData childNodeData, nodeData.getChildren()) {
         childNodeContainer->addLayout(createNodeWidgets(childNodeData));
     }
