@@ -14,10 +14,16 @@ class MmWidget : public QWidget
 public:
     explicit MmWidget(MmNodeData data, QWidget *parent = 0);
     ~MmWidget();
+    void setBackGround(QColor color);
+    void setData(MmNodeData data);
+
+    //Constants
+public:
+    const int MAX_NODE_WIDTH = 800; //Pixels
+
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-    void setBackGround(QColor color);
 
 signals:
 
@@ -28,6 +34,7 @@ private:
     MmNodeData          m_data;
     QVector<MmWidget>   m_children;
     int                 m_margins;//l,t,r,b
+    QRect               m_nodeBounds;
 };
 
 #endif // MINDMAPWIDGET_H

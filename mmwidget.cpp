@@ -6,14 +6,22 @@
 
 MmWidget::MmWidget(MmNodeData data, QWidget *parent)
     : QWidget(parent)
-    , m_data(data)
 {
-
+    setData(data);
 }
 
 MmWidget::~MmWidget()
 {
 
+}
+void MmWidget::setData(MmNodeData data)
+{
+    QFontMetrics fm(font());
+    QRect m_nodeBounds = fm.boundingRect(0,0, MAX_NODE_WIDTH, height()
+                    , Qt::AlignVCenter | Qt::TextWrapAnywhere
+                    , m_data.getText());
+    setMinimumSize(m_nodeBounds.size());
+    m_data = data;
 }
 
 void MmWidget::setBackGround(QColor color)
@@ -31,6 +39,9 @@ void MmWidget::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     //Paint background
     painter.fillRect(rect(), palette().background());
+
+    painter.setPen(QPen(Qt::red));
+    painter.drawRect(m_nodeBounds);
 
 
     painter.setRenderHint(QPainter::Antialiasing);

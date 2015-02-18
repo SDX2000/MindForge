@@ -28,9 +28,13 @@ private:
     Ui::ProMind*    m_ui;
     MmWidget        m_mindMapWidget;
     QSettings       m_settings;
-    QColor          m_bgColor;
+
     QFontDatabase   m_fontDb;
     const char*     BGCOLOR_KEY = "mindmap/bgcolor";
+
+    //Settings
+private:
+    QColor          m_bgColor;
 };
 
 #endif // PROMIND_H

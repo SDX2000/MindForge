@@ -9,6 +9,7 @@
 class MmNodeData
 {
 public:
+    MmNodeData();
     MmNodeData(QString text);
     ~MmNodeData();
 

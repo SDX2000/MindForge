@@ -1,5 +1,10 @@
 #include "mmnodedata.h"
 
+MmNodeData::MmNodeData()
+{
+
+}
+
 MmNodeData::MmNodeData(QString text)
     :m_text(text)
 {

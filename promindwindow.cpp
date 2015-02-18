@@ -14,6 +14,8 @@ ProMindWindow::ProMindWindow(MmNodeData root, QWidget *parent)
     m_ui->setupUi(this);
 
     m_bgColor = m_settings.value(BGCOLOR_KEY, QColor(Qt::white)).value<QColor>();
+    m_mindMapWidget.setBackGround(m_bgColor);
+
     setCentralWidget(&m_mindMapWidget);
 
     addFonts();
