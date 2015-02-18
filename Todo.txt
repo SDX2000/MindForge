@@ -1,0 +1,3 @@
+- Create a NodeWidget which encapsulates a QLabel and a singleton QTextEdit shared by all
+- Display a border around the node widget for debugging purposes.
+- Change layout properties to fix the internode space. The distance between the nodes should not change with the size of MmWidget.

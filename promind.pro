@@ -29,3 +29,6 @@ RESOURCES += \
     promind.qrc \
     promind2.qrc \
     promind3.qrc
+
+DISTFILES += \
+    Todo.txt

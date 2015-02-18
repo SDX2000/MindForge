@@ -9,15 +9,48 @@
 class MmNodeData
 {
 public:
-    MmNodeData();
-    MmNodeData(QString text);
-    ~MmNodeData();
+    MmNodeData()
+    {
+    }
 
-    const QString& getText() const;
-    void setText(QString text);
-    void addChild(QString text);
-    void addChild(MmNodeData child);
-    MmNodeData& getChild(int index);
+    MmNodeData(QString text)
+        :m_text(text)
+    {
+    }
+
+    ~MmNodeData()
+    {
+    }
+
+    const QString& getText() const
+    {
+        return m_text;
+    }
+
+    void setText(QString text)
+    {
+        m_text = text;
+    }
+
+    void addChild(QString text)
+    {
+        m_children.push_back(MmNodeData(text));
+    }
+
+    void addChild(MmNodeData child)
+    {
+        m_children.push_back(child);
+    }
+
+    MmNodeData& getChild(int index)
+    {
+        return m_children.at(index);
+    }
+
+    std::vector<MmNodeData> getChildren()
+    {
+        return m_children;
+    }
 
 private:
     QString m_text;

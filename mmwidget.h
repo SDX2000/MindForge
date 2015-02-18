@@ -15,7 +15,7 @@ public:
     explicit MmWidget(MmNodeData data, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
-    void setData(MmNodeData data);
+    void setData(MmNodeData nodeData);
 
     //Constants
 public:
@@ -24,6 +24,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
+    QLayout* createNodeWidgets(MmNodeData &nodeData);
 
 signals:
 
@@ -31,7 +32,7 @@ public slots:
 
 private:
     QSettings           m_settings;
-    MmNodeData          m_data;
+    MmNodeData          m_rootNodeData;
     QVector<MmWidget>   m_children;
     int                 m_margins;//l,t,r,b
     QRect               m_nodeBounds;
