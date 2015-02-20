@@ -43,14 +43,14 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
 {
     QSize nodeSize = node.getDimensions();
 
-    TRACE(nodeSize);
+    //TRACE(nodeSize);
 
     //TRACE(painter.font().family());
 
     QFontMetrics fm(painter.font(), painter.device());
 
 
-    TRACE(node.getText());
+    //TRACE(node.getText());
     //TRACE(fm.width(node.getText()));
 
 
@@ -69,9 +69,15 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
                      , node.getText()
                      , &br);
 
-    TRACE(br);
+    br.translate(0, 2);
+    painter.drawLine(br.bottomLeft(), br.bottomRight());
 
-    painter.translate(nodeSize.width() + MmNode::X_MARGIN, 0);
+    //TRACE(br);
+
+
+
+
+
 
     int totalInnerYMargin = node.getChildren().empty()? 0: MmNode::Y_MARGIN * ((int)node.getChildren().size() - 1);
 
@@ -79,10 +85,19 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
 
     y = -treeHeight/2;
 
+
+
     foreach(MmNode childNode, node.getChildren())
     {
         painter.save();
-        painter.translate(0,  y);
+        painter.translate(nodeSize.width(), br.bottom());
+
+        QPainterPath path;
+        path.cubicTo(MmNode::X_MARGIN/2 , 0, MmNode::X_MARGIN/2, y, MmNode::X_MARGIN, y);
+        painter.drawPath(path);
+
+        painter.translate(MmNode::X_MARGIN,  y);
+
         paintNode(childNode, painter);
         painter.restore();
 
