@@ -65,7 +65,7 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
 
     QRect br;
     painter.drawText(0, y, nodeSize.width(), nodeSize.height()
-                     , Qt::TextWrapAnywhere
+                     , Qt::TextWordWrap
                      , node.getText()
                      , &br);
 

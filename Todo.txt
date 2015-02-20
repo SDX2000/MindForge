@@ -1,3 +1,17 @@
-- Create a NodeWidget which encapsulates a QLabel and a singleton QTextEdit shared by all
+
+
+
+
+
+LONG TERM
+- Replace the call to drawText word-wrapping with a custom word wrapping routine.
+    QString str = "Now: this sentence fragment.";
+    QStringList list = str.split(QRegExp("\\b"), QString::SkipEmptyParts);
+    // list: ["Now", ": ", "this", " ", "sentence", " ", "fragment", "." ]
+
+DONE
 - Display a border around the node widget for debugging purposes.
 - Change layout properties to fix the internode space. The distance between the nodes should not change with the size of MmWidget.
+
+CANCELLED
+- Create a NodeWidget which encapsulates a QLabel and a singleton QTextEdit shared by all
