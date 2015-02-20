@@ -1,7 +1,9 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPainter>
-#include <qevent.h>
+#include <QDebug>
+#include <QEvent>
+
 
 #include "mmwidget.h"
 #include "common.h"
@@ -41,23 +43,39 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
 {
     QSize nodeSize = node.getDimensions();
 
+    TRACE(nodeSize);
+
+    //TRACE(painter.font().family());
+
+    QFontMetrics fm(painter.font(), painter.device());
+
+
+    TRACE(node.getText());
+    //TRACE(fm.width(node.getText()));
+
+
     int y = -nodeSize.height()/2;
 
+//    painter.setPen(QPen(Qt::red));
+//    painter.drawRect(QRect(0, y, nodeSize.width(), nodeSize.height()));
 
     painter.setPen(QPen(Qt::black));
-    //painter.setBrush(QBrush(Qt::black));
 
+//    qDebug() << node.getText() << " " << nodeSize.width() <<  " x " << nodeSize.height() << endl;
+
+    QRect br;
     painter.drawText(0, y, nodeSize.width(), nodeSize.height()
                      , Qt::TextWrapAnywhere
-                     , node.getText());
+                     , node.getText()
+                     , &br);
 
-
-    painter.setPen(QPen(Qt::red));
-    painter.drawRect(QRect(0, y, nodeSize.width(), nodeSize.height()));
+    TRACE(br);
 
     painter.translate(nodeSize.width() + MmNode::X_MARGIN, 0);
 
-    int treeHeight = node.getTreeHeight();
+    int totalInnerYMargin = node.getChildren().empty()? 0: MmNode::Y_MARGIN * ((int)node.getChildren().size() - 1);
+
+    int treeHeight = node.getTreeHeight() + totalInnerYMargin;
 
     y = -treeHeight/2;
 
@@ -68,7 +86,7 @@ void MmWidget::paintNode(MmNode node, QPainter &painter)
         paintNode(childNode, painter);
         painter.restore();
 
-        y += childNode.getTreeHeight();
+        y += childNode.getTreeHeight() + MmNode::Y_MARGIN;
     }
 }
 
@@ -80,10 +98,9 @@ void MmWidget::paintEvent(QPaintEvent *)
     //Paint background
     painter.fillRect(rect(), palette().background());
 
-
+    painter.setPen(QPen(Qt::red));
 
     painter.translate(0, height()/2);
     paintNode(m_rootNode, painter);
-
 }
 

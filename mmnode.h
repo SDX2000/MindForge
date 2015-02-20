@@ -95,7 +95,7 @@ public:
     int getTreeHeight()
     {
         if (m_children.empty())
-            return  m_size.height() + Y_MARGIN;
+            return  m_size.height();
 
         int treeHeight = 0;
 
@@ -110,6 +110,7 @@ public:
     const MmNode& operator = (const MmNode& rhs)
     {
         m_text      = rhs.m_text;
+        m_size      = rhs.m_size;
         m_children  = rhs.m_children;
         m_font      = rhs.m_font;
         mb_fontSet  = rhs.mb_fontSet;
@@ -127,9 +128,7 @@ public:
 private:
     QString                 m_text;
     QSize                   m_size;
-    int                     m_x;
-    int                     m_y;
-    std::vector<MmNode> m_children;
+    std::vector<MmNode>     m_children;
     QFont                   m_font;
     bool                    mb_fontSet;
     static QFont            sm_defaultFont;

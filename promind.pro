@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT += core gui widgets
 
 
 TARGET = promind
@@ -16,13 +16,13 @@ SOURCES += main.cpp \
     promindwindow.cpp \
     mmnode.cpp
 
-HEADERS  += \
+HEADERS += \
     mmwidget.h \
     common.h \
     promindwindow.h \
     mmnode.h
 
-FORMS    += \
+FORMS += \
     promind.ui
 
 RESOURCES += \
