@@ -14,9 +14,9 @@
 class MmNode
 {
 public:
-    const int MAX_WIDTH = 800;
-    const int Y_MARGIN = 20;
-    const int X_MARGIN = 50;
+    static const int MAX_WIDTH = 800;
+    static const int Y_MARGIN = 20;
+    static const int X_MARGIN = 50;
 
     MmNode()
         :mb_fontSet(false)
@@ -95,7 +95,7 @@ public:
     int getTreeHeight()
     {
         if (m_children.empty())
-            return  m_size.height();
+            return  m_size.height() + Y_MARGIN;
 
         int treeHeight = 0;
 

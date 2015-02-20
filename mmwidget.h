@@ -2,7 +2,7 @@
 #define MINDMAPWIDGET_H
 
 
-#include "mmnodedata.h"
+#include "mmnode.h"
 
 #include <QSettings>
 #include <QWidget>
@@ -15,8 +15,8 @@ public:
     explicit MmWidget(MmNode data, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
-    void setData(MmNode nodeData);
-    void paintNode(MmNode nodeData, QPainter &painter);
+    void setData(MmNode node);
+    void paintNode(MmNode node, QPainter &painter);
 
     //Constants
 public:
@@ -33,7 +33,7 @@ public slots:
 
 private:
     QSettings           m_settings;
-    MmNode          m_rootNodeData;
+    MmNode          m_rootNode;
     QVector<MmWidget>   m_children;
     int                 m_margins;//l,t,r,b
     QRect               m_nodeBounds;

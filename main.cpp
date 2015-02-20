@@ -2,7 +2,7 @@
 
 #include "promindwindow.h"
 #include "mmwidget.h"
-#include "mmnodedata.h"
+#include "mmnode.h"
 
 MmNode getTestNodes()
 {
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("ProMind");
 
     QFont font;
-    font.setFamily("Ubuntu");
+    font.setFamily("Droid Sans");
     app.setFont(font);
 
     MmNode::setDefaultFont(font);

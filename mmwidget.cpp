@@ -18,9 +18,9 @@ MmWidget::~MmWidget()
 
 }
 
-void MmWidget::setData(MmNode nodeData)
+void MmWidget::setData(MmNode node)
 {
-    m_rootNodeData = nodeData;
+    m_rootNode = node;
 }
 
 
@@ -32,30 +32,47 @@ void MmWidget::setBackGround(QColor color)
     setPalette(p);
 }
 
-void MmWidget::resizeEvent(QResizeEvent *event)
+void MmWidget::resizeEvent(QResizeEvent *)
 {
 
 }
 
-void MmWidget::paintNode(MmNode nodeData, QPainter &painter)
+void MmWidget::paintNode(MmNode node, QPainter &painter)
 {
-    QSize size = nodeData.getDimensions();
+    QSize nodeSize = node.getDimensions();
 
-    int _y = -size.height()/2;
+    int y = -nodeSize.height()/2;
 
-    painter.drawText(0, _y, size.width(), size.height()
+
+    painter.setPen(QPen(Qt::black));
+    //painter.setBrush(QBrush(Qt::black));
+
+    painter.drawText(0, y, nodeSize.width(), nodeSize.height()
                      , Qt::TextWrapAnywhere
-                     , nodeData.getText());
+                     , node.getText());
 
-    int totalChildHeight = nodeData.getTreeHeight();
 
-    foreach(MmNode childData, nodeData.getChildren())
+    painter.setPen(QPen(Qt::red));
+    painter.drawRect(QRect(0, y, nodeSize.width(), nodeSize.height()));
+
+    painter.translate(nodeSize.width() + MmNode::X_MARGIN, 0);
+
+    int treeHeight = node.getTreeHeight();
+
+    y = -treeHeight/2;
+
+    foreach(MmNode childNode, node.getChildren())
     {
+        painter.save();
+        painter.translate(0,  y);
+        paintNode(childNode, painter);
+        painter.restore();
 
+        y += childNode.getTreeHeight();
     }
 }
 
-void MmWidget::paintEvent(QPaintEvent *event)
+void MmWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
@@ -63,15 +80,10 @@ void MmWidget::paintEvent(QPaintEvent *event)
     //Paint background
     painter.fillRect(rect(), palette().background());
 
-//    painter.setPen(QPen(Qt::red));
-//    painter.drawRect(m_nodeBounds);
 
-
-    painter.setPen(QPen(Qt::black));
-    painter.setBrush(QBrush(Qt::black));
 
     painter.translate(0, height()/2);
-    paintNode(m_rootNodeData, painter);
+    paintNode(m_rootNode, painter);
 
 }
 
