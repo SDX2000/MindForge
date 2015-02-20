@@ -12,10 +12,11 @@ class MmWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MmWidget(MmNodeData data, QWidget *parent = 0);
+    explicit MmWidget(MmNode data, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
-    void setData(MmNodeData nodeData);
+    void setData(MmNode nodeData);
+    void paintNode(MmNode nodeData, QPainter &painter);
 
     //Constants
 public:
@@ -24,7 +25,7 @@ public:
 protected:
     void paintEvent(QPaintEvent *event);
     void resizeEvent(QResizeEvent *event);
-    QLayout* createNodeWidgets(MmNodeData &nodeData);
+    QLayout* createNodeWidgets(MmNode &nodeData);
 
 signals:
 
@@ -32,7 +33,7 @@ public slots:
 
 private:
     QSettings           m_settings;
-    MmNodeData          m_rootNodeData;
+    MmNode          m_rootNodeData;
     QVector<MmWidget>   m_children;
     int                 m_margins;//l,t,r,b
     QRect               m_nodeBounds;

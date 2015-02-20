@@ -6,7 +6,7 @@
 #include "ui_promind.h"
 #include "common.h"
 
-ProMindWindow::ProMindWindow(MmNodeData root, QWidget *parent)
+MmMainWindow::MmMainWindow(MmNode root, QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::ProMind)
     , m_mindMapWidget(root)
@@ -21,27 +21,27 @@ ProMindWindow::ProMindWindow(MmNodeData root, QWidget *parent)
     addFonts();
 }
 
-void ProMindWindow::addFonts()
+void MmMainWindow::addFonts()
 {
     QDirIterator it(":/fonts", QDirIterator::Subdirectories);
     while (it.hasNext()) {
-        qDebug() << it.next();
+        //qDebug() << it.next();
         m_fontDb.addApplicationFont(it.next());
     }
 
-    foreach(QString s, m_fontDb.families())
-    {
-        qDebug() << s;
-    }
+//    foreach(QString s, m_fontDb.families())
+//    {
+//        qDebug() << s;
+//    }
 }
 
-ProMindWindow::~ProMindWindow()
+MmMainWindow::~MmMainWindow()
 {
     safe_delete(m_ui);
 }
 
 
-void ProMindWindow::resizeEvent(QResizeEvent *event) {
+void MmMainWindow::resizeEvent(QResizeEvent *event) {
     m_mindMapWidget.resize(event->size());
     event->accept();
 }

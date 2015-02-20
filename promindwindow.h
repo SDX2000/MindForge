@@ -10,13 +10,13 @@ namespace Ui {
 class ProMind;
 }
 
-class ProMindWindow : public QMainWindow
+class MmMainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit ProMindWindow(MmNodeData root, QWidget *parent = 0);
-    ~ProMindWindow();
+    explicit MmMainWindow(MmNode root, QWidget *parent = 0);
+    ~MmMainWindow();
 
 protected:
     void resizeEvent(QResizeEvent *event);
