@@ -1,6 +1,7 @@
 #ifndef MMNODEDATA_H
 #define MMNODEDATA_H
 
+#include <QCoreApplication>
 #include <QFont>
 #include <QFontMetrics>
 #include <QObject>
@@ -85,8 +86,7 @@ public:
 
     void updateDimensions()
     {
-        QFont &font = mb_fontSet? m_font : sm_defaultFont;
-        QFontMetrics fm(font);
+        QFontMetrics fm(m_font);
         m_size = fm.boundingRect(0 ,0 , MAX_WIDTH, 0
                                , Qt::AlignLeft | Qt::TextWordWrap
                                , m_text).size();
@@ -117,21 +117,12 @@ public:
         return *this;
     }
 
-    static QFont getDefaultFont() {
-        return sm_defaultFont;
-    }
-
-    static void setDefaultFont(QFont font) {
-        sm_defaultFont = font;
-    }
-
 private:
     QString                 m_text;
     QSize                   m_size;
     std::vector<MmNode>     m_children;
     QFont                   m_font;
     bool                    mb_fontSet;
-    static QFont            sm_defaultFont;
 };
 
 #endif // MMNODEDATA_H

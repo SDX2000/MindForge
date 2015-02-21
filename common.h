@@ -23,7 +23,10 @@ T min(T t, T u)
     return t > u? t: u;
 }
 
-#define TRACE(X) qDebug() << #X " = " << (X);
+
+#define QDBG        qDebug().nospace()
+#define SHOW(X)     #X "=" << (X) <<", "
+#define TRACE(X)    QDBG << #X "=" << (X);
 
 #endif // COMMON_H
 
