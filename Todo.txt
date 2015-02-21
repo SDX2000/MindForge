@@ -1,7 +1,9 @@
+- Replace QFontMetrics measurements with the bounding rect returned by
+drawText. Create a node connector graphical editor with immediate feedback.
 
-
-
-
+- Create a separate Qt drawing primitives editor/playground. Add support for
+drawing QPainter primitives as vector images. Allow tweaking of primitive
+parameters along with rendering hints on a per object basis.
 
 LONG TERM
 - Replace the call to drawText word-wrapping with a custom word wrapping routine.
@@ -10,8 +12,10 @@ LONG TERM
     // list: ["Now", ": ", "this", " ", "sentence", " ", "fragment", "." ]
 
 DONE
-- Display a border around the node widget for debugging purposes.
-- Change layout properties to fix the internode space. The distance between the nodes should not change with the size of MmWidget.
+- Display a border around the node widget for debugging purposes. - Change
+layout properties to fix the internode space. The distance between the nodes
+should not change with the size of MmWidget.
 
 CANCELLED
-- Create a NodeWidget which encapsulates a QLabel and a singleton QTextEdit shared by all
+- Create a NodeWidget which encapsulates a QLabel and a singleton
+QTextEdit shared by all

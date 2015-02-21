@@ -16,7 +16,7 @@ class MmNode
 {
 public:
     static const int MAX_WIDTH = 800;
-    static const int Y_MARGIN = 20;
+    static const int Y_MARGIN = 15;
     static const int X_MARGIN = 50;
 
     MmNode()

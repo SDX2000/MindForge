@@ -16,7 +16,7 @@ public:
     ~MmWidget();
     void setBackGround(QColor color);
     void setData(MmNode node);
-    void paintNode(MmNode node, QPainter &painter);
+    QRectF paintNode(MmNode node, QPainter &painter);
 
     //Constants
 public:
