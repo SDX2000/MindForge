@@ -18,8 +18,13 @@ public:
     explicit MmMainWindow(MmNode root, QWidget *parent = 0);
     ~MmMainWindow();
 
+
+
 protected:
     void resizeEvent(QResizeEvent *event);
+
+private slots:
+    void on_actionOptions_triggered();
 
 private:
     void addFonts();
@@ -30,10 +35,11 @@ private:
     QSettings       m_settings;
 
     QFontDatabase   m_fontDb;
-    const char*     BGCOLOR_KEY = "mindmap/bgcolor";
+
 
     //Settings
 private:
+    const char*     BGCOLOR_KEY = "mindmap/bgcolor";
     QColor          m_bgColor;
 };
 

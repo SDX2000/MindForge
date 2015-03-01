@@ -5,11 +5,12 @@
 #include "promindwindow.h"
 #include "ui_promind.h"
 #include "common.h"
+#include "optionsdialog.h"
 
 MmMainWindow::MmMainWindow(MmNode root, QWidget *parent)
     : QMainWindow(parent)
     , m_ui(new Ui::ProMind)
-    , m_mindMapWidget(root)
+    , m_mindMapWidget(root, m_settings, this)
 {
     m_ui->setupUi(this);
 
@@ -44,4 +45,10 @@ MmMainWindow::~MmMainWindow()
 void MmMainWindow::resizeEvent(QResizeEvent *event) {
     m_mindMapWidget.resize(event->size());
     event->accept();
+}
+
+void MmMainWindow::on_actionOptions_triggered()
+{
+    OptionsDialog od;
+    od.exec();
 }

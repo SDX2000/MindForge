@@ -12,11 +12,28 @@ class MmWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MmWidget(MmNode data, QWidget *parent = 0);
+    explicit MmWidget(MmNode data, QSettings &settings, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
     void setData(MmNode node);
-    QRectF paintNode(MmNode node, QPainter &painter);
+    QRectF paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter);
+
+
+    int yMargin() {
+        return m_yMargin;
+    }
+
+    int xMargin() {
+        return m_xMargin;
+    }
+
+    void setYMargin(int margin) {
+        m_yMargin = margin;
+    }
+
+    void setXMargin(int margin) {
+        m_xMargin = margin;
+    }
 
     //Constants
 public:
@@ -32,11 +49,18 @@ signals:
 public slots:
 
 private:
-    QSettings           m_settings;
-    MmNode          m_rootNode;
+    QSettings           &m_settings;
+    MmNode              m_rootNode;
     QVector<MmWidget>   m_children;
-    int                 m_margins;//l,t,r,b
     QRect               m_nodeBounds;
+
+    //Settings
+private:
+    const char*     XMARGIN_KEY = "mindmap/xmargin";
+    int             m_xMargin;
+
+    const char*     YMARGIN_KEY = "mindmap/ymargin";
+    int             m_yMargin;
 };
 
 #endif // MINDMAPWIDGET_H

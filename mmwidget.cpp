@@ -9,8 +9,11 @@
 #include "common.h"
 
 
-MmWidget::MmWidget(MmNode data, QWidget *parent)
-    : QWidget(parent)
+MmWidget::MmWidget(MmNode data, QSettings &settings, QWidget *parent)
+    : m_settings(settings)
+    , QWidget(parent)
+    , m_xMargin(30)
+    , m_yMargin(15)
 {
     setData(data);
 }
@@ -39,28 +42,27 @@ void MmWidget::resizeEvent(QResizeEvent *)
 
 }
 
-QRectF MmWidget::paintNode(MmNode node, QPainter &painter)
+QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 {
-
     QPen blackPen(Qt::black);
     blackPen.setWidth(2);
 
     QPen redPen(Qt::red);
     redPen.setWidth(1);
 
-
     painter.setPen(blackPen);
 
     QSize nodeSize = node.getDimensions();
 
-    QDBG << SHOW(node.getText()) << SHOW(nodeSize.width()) <<  SHOW(nodeSize.height());
+    //QDBG << SHOW(node.getText()) << SHOW(nodeSize.width()) <<  SHOW(nodeSize.height());
 
-    double y = -nodeSize.height()/2.0;
+    qreal x = _x;
+    qreal y = _y - nodeSize.height()/2.0;
 
     painter.setRenderHint(QPainter::Antialiasing, true);
 
 
-    QRectF r(0.0, y, nodeSize.width(), nodeSize.height());
+    QRectF r(x, y, nodeSize.width(), nodeSize.height());
     QRectF br;
 
     painter.drawText(r
@@ -68,53 +70,39 @@ QRectF MmWidget::paintNode(MmNode node, QPainter &painter)
                      , node.getText()
                      , &br);
 
-
-    br.translate(0, 2);
-
     painter.drawLine(br.bottomLeft(), br.bottomRight());
+    //TRACE(br);
 
+    qreal totalInnerYMargin = node.getChildren().empty()? 0: yMargin() * ((int)node.getChildren().size() - 1);
 
-//    painter.setPen(redPen);
-//    painter.drawRect(br);
-//    painter.setPen(blackPen);
+    qreal treeHeight = node.getTreeHeight() + totalInnerYMargin;
 
-    TRACE(br);
+    const qreal Y_ADJUST = 5;
 
+    y -= treeHeight/2.0 + Y_ADJUST;
 
-    double totalInnerYMargin = node.getChildren().empty()? 0: MmNode::Y_MARGIN * ((int)node.getChildren().size() - 1);
-
-    double treeHeight = node.getTreeHeight() + totalInnerYMargin;
-
-    y = -treeHeight/2.0;
-
-    painter.translate(br.width(), br.bottom());
-
-
+    x += br.width() + xMargin();
 
 
     foreach(MmNode childNode, node.getChildren())
     {
-        painter.save();
-
         //Draw child node
-        painter.translate(MmNode::X_MARGIN,  y);
-        QRectF childBr = paintNode(childNode, painter).translated(MmNode::X_MARGIN, y);
-        TRACE(childBr);
-        painter.restore();
+        QRectF childBr = paintNode(x, y, childNode, painter);
 
         //Draw connector from parent node to child node
-        const double streach = 1.5;
-        const int cp1X = br.right() + (childBr.left() - br.right())/2*streach;
-        const int cp2X = br.right() + (childBr.left() - br.right())/2*(ceil(streach) - streach) ;
-
-        QDBG << "Before cubicTo(): " << SHOW(br) << SHOW(cp1X) << SHOW(cp2X) << SHOW(childBr);
-
         QPainterPath path;
-        path.cubicTo(cp1X , 0, cp2X, childBr.bottom(), childBr.left(), childBr.bottom());
+        path.moveTo(br.right(), br.bottom());
+
+        const qreal cpX = br.right() + xMargin()/2;
+        path.cubicTo(cpX, br.bottom(),
+                     cpX, childBr.bottom(),
+                     childBr.left(), childBr.bottom());
         painter.drawPath(path);
 
+        //QDBG << "Before cubicTo(): " << SHOW(br) << SHOW(cp1X) << SHOW(cp2X) << SHOW(childBr);
+
         //Increment y for next child node.
-        y += childNode.getTreeHeight() + MmNode::Y_MARGIN;
+        y += childNode.getTreeHeight() + yMargin();
     }
 
     return br;
@@ -124,11 +112,10 @@ void MmWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
 
-
     //Paint background
     painter.fillRect(rect(), palette().background());
 
-    painter.translate(MmNode::X_MARGIN, height()/2);
-    paintNode(m_rootNode, painter);
+    //painter.translate(xMargin(), height()/2);
+    paintNode(xMargin(), height()/2, m_rootNode, painter);
 }
 

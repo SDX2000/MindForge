@@ -14,16 +14,19 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mmwidget.cpp \
     promindwindow.cpp \
-    mmnode.cpp
+    mmnode.cpp \
+    optionsdialog.cpp
 
 HEADERS += \
     mmwidget.h \
     common.h \
     promindwindow.h \
-    mmnode.h
+    mmnode.h \
+    optionsdialog.h
 
 FORMS += \
-    promind.ui
+    promind.ui \
+    optionsdialog.ui
 
 RESOURCES += \
     promind.qrc \

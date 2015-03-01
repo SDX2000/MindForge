@@ -15,9 +15,8 @@
 class MmNode
 {
 public:
-    static const int MAX_WIDTH = 800;
-    static const int Y_MARGIN = 15;
-    static const int X_MARGIN = 50;
+
+    const int MAX_WIDTH = 800;
 
     MmNode()
         :mb_fontSet(false)
@@ -36,64 +35,53 @@ public:
     {
     }
 
-    const QString& getText() const
-    {
+    const QString& getText() const {
         return m_text;
     }
 
-    void setText(QString text)
-    {
+    void setText(QString text) {
         m_text = text;
         updateDimensions();
     }
 
-    void addChild(QString text)
-    {
+    void addChild(QString text) {
         m_children.push_back(MmNode(text));
     }
 
-    void addChild(MmNode child)
-    {
+    void addChild(MmNode child) {
         m_children.push_back(child);
     }
 
-    MmNode& getChild(int index)
-    {
+    MmNode& getChild(int index) {
         return m_children.at(index);
     }
 
-    std::vector<MmNode> getChildren()
-    {
+    std::vector<MmNode> getChildren() {
         return m_children;
     }
 
-    void setFont(const QFont &font)
-    {
+    void setFont(const QFont &font) {
         mb_fontSet = true;
         m_font = font;
         updateDimensions();
     }
 
-    const QFont& getFont()
-    {
+    const QFont& getFont() {
         return m_font;
     }
 
-    QSize getDimensions()
-    {
+    QSize getDimensions() {
         return m_size;
     }
 
-    void updateDimensions()
-    {
+    void updateDimensions() {
         QFontMetrics fm(m_font);
         m_size = fm.boundingRect(0 ,0 , MAX_WIDTH, 0
                                , Qt::AlignLeft | Qt::TextWordWrap
                                , m_text).size();
     }
 
-    int getTreeHeight()
-    {
+    int getTreeHeight() {
         if (m_children.empty())
             return  m_size.height();
 
@@ -107,8 +95,7 @@ public:
         return max(treeHeight, m_size.height());
     }
 
-    const MmNode& operator = (const MmNode& rhs)
-    {
+    const MmNode& operator = (const MmNode& rhs) {
         m_text      = rhs.m_text;
         m_size      = rhs.m_size;
         m_children  = rhs.m_children;
