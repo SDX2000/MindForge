@@ -14,8 +14,11 @@ MmWidget::MmWidget(MmNode data, QSettings &settings, QWidget *parent)
     , QWidget(parent)
     , m_xMargin(30)
     , m_yMargin(15)
+    , m_blackPen(Qt::black)
 {
+    m_blackPen.setWidth(2);
     setData(data);
+
 }
 
 MmWidget::~MmWidget()
@@ -44,13 +47,7 @@ void MmWidget::resizeEvent(QResizeEvent *)
 
 QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 {
-    QPen blackPen(Qt::black);
-    blackPen.setWidth(2);
-
-    QPen redPen(Qt::red);
-    redPen.setWidth(1);
-
-    painter.setPen(blackPen);
+    painter.setPen(m_blackPen);
 
     QSize nodeSize = node.getDimensions();
 

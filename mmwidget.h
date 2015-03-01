@@ -53,6 +53,7 @@ private:
     MmNode              m_rootNode;
     QVector<MmWidget>   m_children;
     QRect               m_nodeBounds;
+    QPen                m_blackPen;
 
     //Settings
 private:
