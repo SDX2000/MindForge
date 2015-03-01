@@ -1,5 +1,5 @@
-#ifndef PROMIND_H
-#define PROMIND_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QFontDatabase>
 #include <QMainWindow>
@@ -7,7 +7,7 @@
 #include "mmwidget.h"
 
 namespace Ui {
-class ProMind;
+class MindForge;
 }
 
 class MmMainWindow : public QMainWindow
@@ -30,7 +30,7 @@ private:
     void addFonts();
 
 private:
-    Ui::ProMind*    m_ui;
+    Ui::MindForge*    m_ui;
     MmWidget        m_mindMapWidget;
     QSettings       m_settings;
 
@@ -43,4 +43,4 @@ private:
     QColor          m_bgColor;
 };
 
-#endif // PROMIND_H
+#endif // MAINWINDOW_H

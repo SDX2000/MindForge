@@ -2,14 +2,14 @@
 #include <QPaintEvent>
 #include<QDebug>
 
-#include "promindwindow.h"
-#include "ui_promind.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "common.h"
 #include "optionsdialog.h"
 
 MmMainWindow::MmMainWindow(MmNode root, QWidget *parent)
     : QMainWindow(parent)
-    , m_ui(new Ui::ProMind)
+    , m_ui(new Ui::MindForge)
     , m_mindMapWidget(root, m_settings, this)
 {
     m_ui->setupUi(this);

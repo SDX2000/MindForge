@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "promindwindow.h"
+#include "mainwindow.h"
 #include "mmwidget.h"
 #include "mmnode.h"
 
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("SDXTECH");
     QCoreApplication::setOrganizationDomain("sdxtech.net");
-    QCoreApplication::setApplicationName("ProMind");
+    QCoreApplication::setApplicationName("MindForge");
 
     QFont font;
     font.setFamily("Droid Sans");

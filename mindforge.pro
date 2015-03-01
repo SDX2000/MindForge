@@ -7,31 +7,31 @@
 QT += core gui widgets
 
 
-TARGET = promind
+TARGET = MindForge
 TEMPLATE = app
 
 
 SOURCES += main.cpp \
     mmwidget.cpp \
-    promindwindow.cpp \
     mmnode.cpp \
-    optionsdialog.cpp
+    optionsdialog.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     mmwidget.h \
     common.h \
-    promindwindow.h \
     mmnode.h \
-    optionsdialog.h
+    optionsdialog.h \
+    mainwindow.h
 
 FORMS += \
-    promind.ui \
-    optionsdialog.ui
+    optionsdialog.ui \
+    mainwindow.ui
 
 RESOURCES += \
-    promind.qrc \
-    promind2.qrc \
-    promind3.qrc
+    resources.qrc \
+    resources3.qrc \
+    resources2.qrc
 
 DISTFILES += \
     Todo.txt
