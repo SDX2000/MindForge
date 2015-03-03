@@ -53,6 +53,8 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
     QRectF targetRect(x, y, nodeSize.width(), nodeSize.height());
     QRectF br;
 
+    painter.setPen(m_blackPen);
+
     painter.drawText(targetRect
                      , Qt::TextWordWrap
                      , node.getText()
@@ -60,10 +62,7 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 
     painter.drawLine(br.bottomLeft(), br.bottomRight());
 
-    painter.setPen(QPen(Qt::red));
-    painter.drawRect(br);
-
-    TRACE(br);
+    //TRACE(br);
 
     qreal totalInnerYMargin = node.getChildren().empty()? 0: yMargin() * ((int)node.getChildren().size() - 1);
 
@@ -75,7 +74,7 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 
     x += br.width() + xMargin();
 
-    painter.setPen(m_blackPen);
+
 
     foreach(MmNode childNode, node.getChildren())
     {
@@ -105,10 +104,10 @@ void MmWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
 
-    painter.setRenderHint(QPainter::Antialiasing, true);
-
     //Paint background
     painter.fillRect(rect(), palette().background());
+
+    painter.setRenderHint(QPainter::Antialiasing, true);
 
     //painter.translate(xMargin(), height()/2);
     paintNode(xMargin(), height()/2, m_rootNode, painter);
