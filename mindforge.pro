@@ -2,7 +2,9 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = gui
+SUBDIRS = gui \
+    lz4 \
+    model
 
 CONFIG += ordered
 

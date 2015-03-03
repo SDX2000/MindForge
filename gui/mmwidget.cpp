@@ -74,8 +74,6 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 
     x += br.width() + xMargin();
 
-
-
     foreach(MmNode childNode, node.getChildren())
     {
         //Draw child node

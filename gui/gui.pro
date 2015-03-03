@@ -4,30 +4,24 @@
 #
 #-------------------------------------------------
 
-! include( ../common.pri ) {
+! include( ../staticlib.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
 
 QT += core gui widgets
 
 
-#TARGET = MindForge
-#TEMPLATE = app
-
-
 SOURCES += mmwidget.cpp \
     mmnode.cpp \
     optionsdialog.cpp \
-    mainwindow.cpp \
-    mmloader.cpp
+    mainwindow.cpp
 
 HEADERS += \
     mmwidget.h \
     common.h \
     mmnode.h \
     optionsdialog.h \
-    mainwindow.h \
-    mmloader.h
+    mainwindow.h
 
 FORMS += \
     optionsdialog.ui \
