@@ -15,14 +15,16 @@ SOURCES += main.cpp \
     mmwidget.cpp \
     mmnode.cpp \
     optionsdialog.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mmloader.cpp
 
 HEADERS += \
     mmwidget.h \
     common.h \
     mmnode.h \
     optionsdialog.h \
-    mainwindow.h
+    mainwindow.h \
+    mmloader.h
 
 FORMS += \
     optionsdialog.ui \

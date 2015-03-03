@@ -31,8 +31,6 @@ void MmWidget::setData(MmNode node)
     m_rootNode = node;
 }
 
-
-
 void MmWidget::setBackGround(QColor color)
 {
     QPalette p(palette());
@@ -47,28 +45,25 @@ void MmWidget::resizeEvent(QResizeEvent *)
 
 QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 {
-    painter.setPen(m_blackPen);
-
     QSize nodeSize = node.getDimensions();
-
-    //QDBG << SHOW(node.getText()) << SHOW(nodeSize.width()) <<  SHOW(nodeSize.height());
 
     qreal x = _x;
     qreal y = _y - nodeSize.height()/2.0;
 
-    painter.setRenderHint(QPainter::Antialiasing, true);
-
-
-    QRectF r(x, y, nodeSize.width(), nodeSize.height());
+    QRectF targetRect(x, y, nodeSize.width(), nodeSize.height());
     QRectF br;
 
-    painter.drawText(r
+    painter.drawText(targetRect
                      , Qt::TextWordWrap
                      , node.getText()
                      , &br);
 
     painter.drawLine(br.bottomLeft(), br.bottomRight());
-    //TRACE(br);
+
+    painter.setPen(QPen(Qt::red));
+    painter.drawRect(br);
+
+    TRACE(br);
 
     qreal totalInnerYMargin = node.getChildren().empty()? 0: yMargin() * ((int)node.getChildren().size() - 1);
 
@@ -80,6 +75,7 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 
     x += br.width() + xMargin();
 
+    painter.setPen(m_blackPen);
 
     foreach(MmNode childNode, node.getChildren())
     {
@@ -109,10 +105,11 @@ void MmWidget::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
 
+    painter.setRenderHint(QPainter::Antialiasing, true);
+
     //Paint background
     painter.fillRect(rect(), palette().background());
 
     //painter.translate(xMargin(), height()/2);
     paintNode(xMargin(), height()/2, m_rootNode, painter);
 }
-

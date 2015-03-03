@@ -30,6 +30,10 @@ int main(int argc, char *argv[])
     font.setFamily("Droid Sans");
     app.setFont(font);
 
+    if(argc > 2) {
+
+    }
+
 
     MmNode root = getTestNodes();
 
