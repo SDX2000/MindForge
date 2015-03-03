@@ -2,7 +2,7 @@
 #define MINDMAPWIDGET_H
 
 
-#include "mmnode.h"
+#include "model/mmnode.h"
 
 #include <QSettings>
 #include <QWidget>

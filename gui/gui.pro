@@ -12,14 +12,11 @@ QT += core gui widgets
 
 
 SOURCES += mmwidget.cpp \
-    mmnode.cpp \
     optionsdialog.cpp \
     mainwindow.cpp
 
 HEADERS += \
     mmwidget.h \
-    common.h \
-    mmnode.h \
     optionsdialog.h \
     mainwindow.h
 

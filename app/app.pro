@@ -10,6 +10,6 @@ SOURCES += main.cpp
 # Will build the final executable in the main project directory.
 TARGET = MindForge
 
-DEPENDENCY_LIBRARIES = gui
+DEPENDENCY_LIBRARIES = gui model
 
 include(../dependencies.pri)

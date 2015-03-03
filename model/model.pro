@@ -8,10 +8,14 @@
     error( "Couldn't find the common.pri file!" )
 }
 
-QT       -= core gui
+QT = core gui widgets
 
 CONFIG += staticlib
 
-SOURCES += mmmodel.cpp
+SOURCES += \
+    mmnode.cpp \
+    mmloader.cpp
 
-HEADERS += mmmodel.h
+HEADERS += \
+    mmnode.h \
+    mmloader.h
