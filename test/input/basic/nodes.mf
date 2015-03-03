@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mindmap version="0.0.1">
+    <node ID="0">
+        <node ID="1"/>
+        <node ID="2"/>
+        <node ID="3"/>
+    </node>
+</mindmap>

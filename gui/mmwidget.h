@@ -12,7 +12,7 @@ class MmWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit MmWidget(MmNode data, QSettings &settings, QWidget *parent = 0);
+    explicit MmWidget(QSettings &settings, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
     void setData(MmNode node);

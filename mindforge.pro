@@ -4,7 +4,8 @@ TEMPLATE = subdirs
 
 SUBDIRS = gui \
     lz4 \
-    model
+    model \
+    test
 
 CONFIG += ordered
 

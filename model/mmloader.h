@@ -5,6 +5,24 @@
 
 #include <QDir>
 #include <QString>
+#include <exception>
+
+class BadFile: public std::exception
+{
+    QString m_message;
+public:
+
+    BadFile(QString filePath)
+      : m_message(filePath)
+    {
+
+    }
+
+    virtual const char* what() const
+    {
+        return m_message.toUtf8().constData();
+    }
+};
 
 class MmLoader
 {

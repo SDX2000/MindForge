@@ -15,7 +15,7 @@ class MmMainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MmMainWindow(MmNode root, QWidget *parent = 0);
+    explicit MmMainWindow(QWidget *parent = 0);
     ~MmMainWindow();
 
 
@@ -25,6 +25,8 @@ protected:
 
 private slots:
     void on_actionOptions_triggered();
+
+    void on_actionOpen_triggered();
 
 private:
     void addFonts();

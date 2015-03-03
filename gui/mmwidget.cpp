@@ -9,7 +9,7 @@
 #include "common.h"
 
 
-MmWidget::MmWidget(MmNode data, QSettings &settings, QWidget *parent)
+MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     : m_settings(settings)
     , QWidget(parent)
     , m_xMargin(30)
@@ -17,8 +17,6 @@ MmWidget::MmWidget(MmNode data, QSettings &settings, QWidget *parent)
     , m_blackPen(Qt::black)
 {
     m_blackPen.setWidth(2);
-    setData(data);
-
 }
 
 MmWidget::~MmWidget()

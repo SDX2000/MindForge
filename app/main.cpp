@@ -1,4 +1,5 @@
 #include <QApplication>
+#include <QFileDialog>
 
 #include "gui/mainwindow.h"
 #include "gui/mmwidget.h"
@@ -18,10 +19,9 @@ int main(int argc, char *argv[])
     font.setFamily("Droid Sans");
     app.setFont(font);
 
+    MmMainWindow w;
 
-    MmNode root = MmLoader::load(QDir("."));
-
-    MmMainWindow w(root);
     w.show();
+
     return app.exec();
 }

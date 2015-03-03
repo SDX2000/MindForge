@@ -44,12 +44,14 @@ public:
         updateDimensions();
     }
 
-    void addChild(QString text) {
+    MmNode& addChild(QString text) {
         m_children.push_back(MmNode(text));
+        return m_children[m_children.size() - 1];
     }
 
-    void addChild(MmNode child) {
+    MmNode& addChild(MmNode child) {
         m_children.push_back(child);
+        return m_children[m_children.size() - 1];
     }
 
     MmNode& getChild(int index) {
