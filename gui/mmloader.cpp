@@ -2,5 +2,5 @@
 
 MmNode MmLoader::Load(QString fileName)
 {
-
+    return MmNode();
 }

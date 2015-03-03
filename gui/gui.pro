@@ -4,15 +4,18 @@
 #
 #-------------------------------------------------
 
+! include( ../common.pri ) {
+    error( "Couldn't find the common.pri file!" )
+}
+
 QT += core gui widgets
 
 
-TARGET = MindForge
-TEMPLATE = app
+#TARGET = MindForge
+#TEMPLATE = app
 
 
-SOURCES += main.cpp \
-    mmwidget.cpp \
+SOURCES += mmwidget.cpp \
     mmnode.cpp \
     optionsdialog.cpp \
     mainwindow.cpp \

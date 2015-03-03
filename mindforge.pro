@@ -6,5 +6,5 @@ SUBDIRS = gui
 
 CONFIG += ordered
 
-#build must be added last
-SUBDIRS += build
+#The app folder must be added last
+SUBDIRS += app

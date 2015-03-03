@@ -1,8 +1,8 @@
 #include <QApplication>
 
-#include "mainwindow.h"
-#include "mmwidget.h"
-#include "mmnode.h"
+#include "gui/mainwindow.h"
+#include "gui/mmwidget.h"
+#include "gui/mmnode.h"
 
 MmNode getTestNodes()
 {
