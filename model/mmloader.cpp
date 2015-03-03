@@ -40,12 +40,12 @@ MmNode MmLoader::load(QDir baseDir)
     QFile file(filePath);
 
     if(!file.open(QIODevice::ReadOnly))
-        throw exception("Bad file.");
+        throw BadFile(filePath);
 
     QXmlStreamReader xml;
 
     xml.setDevice(&file);
-    xml.readNext();
+
 
     MmNode superRoot;
 
@@ -54,19 +54,21 @@ MmNode MmLoader::load(QDir baseDir)
     nodeStack.push(&superRoot);
 
     while (!xml.atEnd()) {
-        if (xml.isStartElement()) {
-            if (xml.name() == "node") {
-                QString id = xml.attributes().value("ID").toString();
-                QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
-                MmNode &childNode = nodeStack.top()->addChild(readAllText(nodeFilePath));
-                nodeStack.push(&childNode);
-            }
-        } else if (xml.isEndElement()) {
-            if (xml.name() == "node") {
-                nodeStack.pop();
-            }
+        switch(xml.readNext()) {
+            case QXmlStreamReader::StartElement:
+                if (xml.name() == "node") {
+                    QString id = xml.attributes().value("ID").toString();
+                    QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
+                    MmNode &childNode = nodeStack.top()->addChild(readAllText(nodeFilePath));
+                    nodeStack.push(&childNode);
+                }
+                break;
+            case QXmlStreamReader::EndElement:
+                if (xml.name() == "node") {
+                    nodeStack.pop();
+                }
+                break;
         }
-        xml.readNext();
     }
 
     return superRoot.getChild(0);
