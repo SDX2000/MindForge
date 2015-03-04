@@ -22,6 +22,11 @@ public:
     {
         return m_message.toUtf8().constData();
     }
+
+    QString message() const
+    {
+        return m_message;
+    }
 };
 
 class MmLoader

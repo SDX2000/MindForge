@@ -28,7 +28,6 @@ QString readAllText(QString filePath)
         throw BadFile(filePath);
     }
 
-
     QTextStream in(&file);
     return in.readAll();
 }

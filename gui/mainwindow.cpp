@@ -2,6 +2,7 @@
 #include <QDirIterator>
 #include <QPaintEvent>
 #include <QDebug>
+#include <QMessageBox>
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -61,7 +62,11 @@ void MmMainWindow::on_actionOpen_triggered()
 {
     QString folderPath = QFileDialog::getExistingDirectory(this, "Choose input folder");
 
-    MmNode root = MmLoader::load(QDir(folderPath));
-
-    m_mindMapWidget.setData(root);
+    try {
+        MmNode root = MmLoader::load(QDir(folderPath));
+        m_mindMapWidget.setData(root);
+    }
+    catch(BadFile &ex) {
+        QMessageBox::warning(this, "Could not open mind map.", ex.message());
+    }
 }
