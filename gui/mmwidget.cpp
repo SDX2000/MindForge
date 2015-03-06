@@ -15,6 +15,11 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     , m_xMargin(30)
     , m_yMargin(15)
     , m_blackPen(Qt::black)
+#ifdef DUMP_FRAMES
+    , m_img(800, 550, QImage::Format_RGB32)
+    , m_px(400)
+    , m_py(0)
+#endif
 {
     m_blackPen.setWidth(2);
 }
@@ -22,6 +27,26 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
 MmWidget::~MmWidget()
 {
 
+}
+
+int MmWidget::yMargin()
+{
+    return m_yMargin;
+}
+
+int MmWidget::xMargin()
+{
+    return m_xMargin;
+}
+
+void MmWidget::setYMargin(int margin)
+{
+    m_yMargin = margin;
+}
+
+void MmWidget::setXMargin(int margin)
+{
+    m_xMargin = margin;
 }
 
 void MmWidget::setData(MmNode node)
@@ -41,95 +66,98 @@ void MmWidget::resizeEvent(QResizeEvent *)
 
 }
 
-#define TRACELINE(C, X) \
-    painter.save(); \
-    painter.setPen(QPen(C)); \
-    painter.drawLine X; \
-    painter.restore();
 
 
-#define TRACERECT(C, X) \
-    painter.save(); \
-    painter.setPen(QPen(C)); \
-    painter.drawRect X; \
-    painter.restore();
-
-int serial=0;
-
-void save(QImage *img)
+#ifdef DUMP_FRAMES
+void MmWidget::imgPrint(QString str, QPainter &painter)
 {
-    img->save(QString("mm%1.png").arg(serial++));
+    QRect targetRect(m_px, m_py, 800, 800);
+    QRect br;
+    painter.drawText(targetRect
+                     , Qt::TextWordWrap
+                     , str
+                     , &br);
+
+    m_py += br.height();
+    save();
 }
 
 
-QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
+void MmWidget::save()
 {
-    QImage *img = (QImage*)painter.device();
+    m_img.save(QString("mm%1.png").arg(m_serial++));
+}
+#endif
 
-//    TRACELINE(Qt::gray, (0,0, _x, _y));
-//    save(img);
-
+QRect MmWidget::paintNode(int _x, int _y, MmNode node, QPainter &painter)
+{
     QSize nodeSize = node.getDimensions();
 
-    qreal x = _x;
-    qreal y = _y - nodeSize.height()/2.0;
+    int x = _x;
+    int y = _y - nodeSize.height()/2;
 
-//    TRACELINE(Qt::blue, (_x, _y, x, y));
-//    save(img);
+    PRINT(QString("(x, y)=(%1, %2)").arg(x).arg(y), painter);
 
-    QRectF targetRect(x, y, nodeSize.width(), nodeSize.height());
-
-//    TRACERECT(Qt::gray, (targetRect));
-//    save(img);
-
-    QRectF br;
+    QRect targetRect(x, y, nodeSize.width(), nodeSize.height());
 
     painter.setPen(m_blackPen);
 
+    QRect br;
     painter.drawText(targetRect
                      , Qt::TextWordWrap
                      , node.getText()
                      , &br);
 
-    save(img);
-
+    //painter.setRenderHint(QPainter::Antialiasing, false);
     painter.drawLine(br.bottomLeft(), br.bottomRight());
+    //painter.setRenderHint(QPainter::Antialiasing, true);
 
-//    save(img);
+    PRINT(QString("(br.bottomLeft(), br.bottomLeft())=((%1, %2), (%3, %4))")
+          .arg(br.bottomLeft().x())
+          .arg(br.bottomLeft().y())
+          .arg(br.bottomRight().x())
+          .arg(br.bottomRight().y())
+          , painter);
 
-    //TRACE(br);
+    int totalInnerYMargin = 0;
+    int treeHeight = 0;
 
-    qreal totalInnerYMargin = node.getChildren().empty()
-                                ? 0
-                                : yMargin() * ((int)node.getChildren().size() - 1);
+    if(node.getChildren().empty())
+        return br;
 
-    qreal treeHeight = node.getTreeHeight() + totalInnerYMargin;
+    totalInnerYMargin = yMargin() * ((int)node.getChildren().size() - 1);
+    treeHeight = node.getTreeHeight() + totalInnerYMargin;
+    treeHeight -= node.getChild(0).getDimensions().height();
 
-    const qreal Y_ADJUST = 0;
 
-    TRACELINE(Qt::gray, (0,0, x, y));
-    save(img);
+    const int Y_ADJUST = 0;
+
+    TRACELINE(Qt::gray, (0,0, _x, _y));
+    PRINT(QString("(_x, _y)=(%1, %2)").arg(_x).arg(_y), painter);
+    PRINT(QString("treeHeight/2=%1").arg(treeHeight/2.0), painter);
 
     _y -= treeHeight/2.0 + Y_ADJUST;
-
     _x += br.width() + xMargin();
 
     TRACELINE(Qt::red, (0, 0, _x, _y));
-    save(img);
+    PRINT(QString("(_x, _y)=(%1, %2)").arg(_x).arg(_y), painter);
 
     TRACELINE(Qt::green, (_x, _y, _x, _y + treeHeight));
-    save(img);
+
+
+    TRACELINE(Qt::blue, (_x + 1, _y, _x + 1, _y + nodeSize.height()));
+    PRINT(QString("nodeSize.height=%1").arg(nodeSize.height()), painter);
 
     foreach(MmNode childNode, node.getChildren())
     {
         //Draw child node
-        QRectF childBr = paintNode(_x, _y, childNode, painter);
+        QRect childBr = paintNode(_x, _y, childNode, painter);
 
         //Draw connector from parent node to child node
         QPainterPath path;
         path.moveTo(br.right(), br.bottom());
 
-        const qreal cpX = br.right() + xMargin()/2;
+        const int cpX = br.right() + xMargin()/2;
         path.cubicTo(cpX, br.bottom(),
                      cpX, childBr.bottom(),
                      childBr.left(), childBr.bottom());
@@ -146,20 +174,20 @@ QRectF MmWidget::paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter)
 
 void MmWidget::paintEvent(QPaintEvent *)
 {
-    //QPainter painter(this);
-    QImage img(600, 600, QImage::Format_RGB32);
-    QPainter painter(&img);
-
+#ifdef DUMP_FRAMES
+    QPainter painter(&m_img);
+#else
+    QPainter painter(this);
+#endif
 
     //Paint background
     painter.fillRect(rect(), palette().background());
-
-    save(&img);
+    painter.drawRect(rect());
+    SAVE();
 
     painter.setRenderHint(QPainter::Antialiasing, true);
 
     //painter.translate(xMargin(), height()/2);
     paintNode(xMargin(), height()/2, m_rootNode, painter);
-
-    save(&img);
+    SAVE();
 }

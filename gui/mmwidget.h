@@ -16,24 +16,17 @@ public:
     ~MmWidget();
     void setBackGround(QColor color);
     void setData(MmNode node);
-    QRectF paintNode(qreal _x, qreal _y, MmNode node, QPainter &painter);
+    QRect paintNode(int _x, int _y, MmNode node, QPainter &painter);
+    int yMargin();
+    int xMargin();
+    void setYMargin(int margin);
+    void setXMargin(int margin);
 
+#ifdef DUMP_FRAMES
+    void save();
+    void imgPrint(QString str, QPainter &painter);
+#endif
 
-    int yMargin() {
-        return m_yMargin;
-    }
-
-    int xMargin() {
-        return m_xMargin;
-    }
-
-    void setYMargin(int margin) {
-        m_yMargin = margin;
-    }
-
-    void setXMargin(int margin) {
-        m_xMargin = margin;
-    }
 
     //Constants
 public:
@@ -62,6 +55,36 @@ private:
 
     const char*     YMARGIN_KEY = "mindmap/ymargin";
     int             m_yMargin;
+
+#ifdef DUMP_FRAMES
+    int m_serial=0;
+    int m_px;
+    int m_py;
+    QImage m_img;
+#endif
 };
+
+#ifdef DUMP_FRAMES
+    #define SAVE() save()
+    #define PRINT(S, P) imgPrint(S, P)
+
+    #define TRACELINE(C, X) \
+        painter.save(); \
+        painter.setPen(QPen(C)); \
+        painter.drawLine X; \
+        painter.restore();
+
+    #define TRACERECT(C, X) \
+        painter.save(); \
+        painter.setPen(QPen(C)); \
+        painter.drawRect X; \
+        painter.restore();
+
+#else
+    #define SAVE()
+    #define PRINT(S, P)
+    #define TRACELINE(C, X)
+    #define TRACERECT(C, X)
+#endif
 
 #endif // MINDMAPWIDGET_H
