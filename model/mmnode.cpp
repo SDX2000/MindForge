@@ -154,7 +154,12 @@ const MmNode& MmNode::operator = (const MmNode& rhs)
 }
 
 
-QRect MmNode::paint(int _x, int _y, QPainter &painter)
+const QRect& MmNode::getTextRect() const
+{
+    return m_textRect;
+}
+
+void MmNode::paint(int _x, int _y, QPainter &painter)
 {
     QSize nodeSize = getDimensions();
 
@@ -177,7 +182,7 @@ QRect MmNode::paint(int _x, int _y, QPainter &painter)
     painter.drawLine(m_textRect.bottomLeft(), m_textRect.bottomRight());
 
     if(getChildren().empty()) {
-        return m_textRect;
+        return;
     }
 
     const int Y_ADJUST = 0;
@@ -194,8 +199,8 @@ QRect MmNode::paint(int _x, int _y, QPainter &painter)
         _y += childNode.getTreeHeight()/2;
 
         //Draw child node
-        QRect childTextRect = childNode.paint(_x, _y, painter);
-
+        childNode.paint(_x, _y, painter);
+        QRect childTextRect = childNode.getTextRect();
         //Draw connector from parent node to child node
         QPainterPath path;
         path.moveTo(m_textRect.right(), m_textRect.bottom());
@@ -209,6 +214,4 @@ QRect MmNode::paint(int _x, int _y, QPainter &painter)
         //Increment y for next child node.
         _y += childNode.getTreeHeight()/2 + childNode.yMargin();
     }
-
-    return m_textRect;
 }
