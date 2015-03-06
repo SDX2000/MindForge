@@ -18,12 +18,12 @@ public:
     const int MAX_WIDTH = 800;
 
     MmNode();
-    explicit MmNode(QString text, int id);
+    explicit MmNode(QString text, int id, MmNode *parent=NULL);
     ~MmNode();
     const QString& getText() const;
     void setText(QString text);
     MmNode& addChild(QString text);
-    MmNode& addChild(QString text, int id);
+    MmNode& addChild(QString text, int id, MmNode *parent);
     MmNode& addChild(MmNode child);
     MmNode& getChild(int index);
     std::vector<MmNode> getChildren();
@@ -37,6 +37,8 @@ public:
     int xMargin();
     void setYMargin(int margin);
     void setXMargin(int margin);
+    const MmNode* getParent() const;
+    int getId() const;
 
 private:
     QString                 m_text;
@@ -44,6 +46,7 @@ private:
     std::vector<MmNode>     m_children;
     QFont                   m_font;
     int                     m_id;
+    const MmNode            *m_parentNode;
 
     //Settings
 private:

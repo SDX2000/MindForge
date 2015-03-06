@@ -15,9 +15,10 @@ MmNode::MmNode()
     m_id = ++sm_lastId;
 }
 
-MmNode::MmNode(QString text, int id)
+MmNode::MmNode(QString text, int id, MmNode *parent)
     : m_text(text)
     , m_id(id)
+    , m_parentNode(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
 {
@@ -40,6 +41,16 @@ void MmNode::setText(QString text)
     updateDimensions();
 }
 
+const MmNode* MmNode::getParent() const
+{
+    return m_parentNode;
+}
+
+int MmNode::getId() const
+{
+    return m_id;
+}
+
 MmNode& MmNode::addChild(QString text)
 {
     m_children.push_back(MmNode());
@@ -48,9 +59,9 @@ MmNode& MmNode::addChild(QString text)
     return node;
 }
 
-MmNode& MmNode::addChild(QString text, int id)
+MmNode& MmNode::addChild(QString text, int id, MmNode *parent)
 {
-    m_children.push_back(MmNode(text, id));
+    m_children.push_back(MmNode(text, id, parent));
     return m_children[m_children.size() - 1];
 }
 

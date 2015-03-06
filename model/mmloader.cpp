@@ -46,7 +46,7 @@ MmNode MmLoader::load(QDir baseDir)
                     QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
                     MmNode &childNode
                             = nodeStack.top()
-                              ->addChild(readAllText(nodeFilePath), id.toInt());
+                              ->addChild(readAllText(nodeFilePath), id.toInt(), nodeStack.top());
                     nodeStack.push(&childNode);
                 }
                 break;
