@@ -32,12 +32,24 @@ public:
     void updateDimensions();
     int getTreeHeight();
     const MmNode& operator = (const MmNode& rhs);
+    int yMargin();
+    int xMargin();
+    void setYMargin(int margin);
+    void setXMargin(int margin);
 
 private:
     QString                 m_text;
     QSize                   m_size;
     std::vector<MmNode>     m_children;
     QFont                   m_font;
+
+    //Settings
+private:
+    const char*     XMARGIN_KEY = "mindmap/xmargin";
+    int             m_xMargin;
+
+    const char*     YMARGIN_KEY = "mindmap/ymargin";
+    int             m_yMargin;
 };
 
 #endif // MMNODEDATA_H

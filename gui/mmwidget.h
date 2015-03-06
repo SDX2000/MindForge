@@ -17,10 +17,6 @@ public:
     void setBackGround(QColor color);
     void setData(MmNode node);
     QRect paintNode(int _x, int _y, MmNode node, QPainter &painter);
-    int yMargin();
-    int xMargin();
-    void setYMargin(int margin);
-    void setXMargin(int margin);
 
 #ifdef DUMP_FRAMES
     void save();
@@ -66,7 +62,7 @@ private:
 
 #ifdef DUMP_FRAMES
     #define SAVE() save()
-    #define PRINT(S, P) imgPrint(S, P)
+    #define PRINT(S) imgPrint(S, painter)
 
     #define TRACELINE(C, X) \
         painter.save(); \
@@ -82,7 +78,7 @@ private:
 
 #else
     #define SAVE()
-    #define PRINT(S, P)
+    #define PRINT(S)
     #define TRACELINE(C, X)
     #define TRACERECT(C, X)
 #endif

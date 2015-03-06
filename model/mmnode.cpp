@@ -2,12 +2,16 @@
 
 
 MmNode::MmNode()
+    : m_xMargin(30)
+    , m_yMargin(27)
 {
     updateDimensions();
 }
 
 MmNode::MmNode(QString text)
     : m_text(text)
+    , m_xMargin(30)
+    , m_yMargin(27)
 {
     updateDimensions();
 }
@@ -65,6 +69,26 @@ QSize MmNode::getDimensions()
     return m_size;
 }
 
+int MmNode::yMargin()
+{
+    return m_yMargin;
+}
+
+int MmNode::xMargin()
+{
+    return m_xMargin;
+}
+
+void MmNode::setYMargin(int margin)
+{
+    m_yMargin = margin;
+}
+
+void MmNode::setXMargin(int margin)
+{
+    m_xMargin = margin;
+}
+
 void MmNode::updateDimensions()
 {
     QFontMetrics fm(m_font);
@@ -75,8 +99,8 @@ void MmNode::updateDimensions()
 
 int MmNode::getTreeHeight()
 {
-//        if (m_children.empty())
-//            return  m_size.height();
+    if (m_children.empty())
+        return m_size.height();
 
     int treeHeight = 0;
 
@@ -84,6 +108,8 @@ int MmNode::getTreeHeight()
     {
         treeHeight += childNodeData.getTreeHeight();
     }
+
+    treeHeight += ((int)m_children.size() -  1) * yMargin();
 
     return max(treeHeight, m_size.height());
 }
