@@ -13,12 +13,14 @@ QT += core gui widgets
 
 SOURCES += mmwidget.cpp \
     optionsdialog.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    mmtextedit.cpp
 
 HEADERS += \
     mmwidget.h \
     optionsdialog.h \
-    mainwindow.h
+    mainwindow.h \
+    mmtextedit.h
 
 FORMS += \
     optionsdialog.ui \

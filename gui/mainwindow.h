@@ -27,6 +27,8 @@ private slots:
     void on_actionOptions_triggered();
     void on_actionOpen_triggered();
 
+    void on_actionNew_child_node_triggered();
+
 private:
     void addFonts();
 

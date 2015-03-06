@@ -4,9 +4,13 @@
 
 #include "model/mmnode.h"
 
+#include "mmtextedit.h"
+
 #include <QSettings>
 #include <QWidget>
 #include <QVector>
+#include <QTextEdit>
+#include <QPlainTextEdit>
 
 class MmWidget : public QWidget
 {
@@ -39,13 +43,16 @@ protected:
 signals:
 
 public slots:
+    void editAccepted();
+    void editRejected();
 
 private:
-    QSettings           &m_settings;
+    QSettings          &m_settings;
     MmNode              m_rootNode;
-    MmNode              *m_selectedNode;
-    //QVector<MmWidget>   m_children;
+    MmNode             *m_selectedNode;
     QPen                m_blackPen;
+    MmTextEdit          m_editor;
+    bool                m_bAddNode;
 
 #ifdef DUMP_FRAMES
     int m_serial=0;

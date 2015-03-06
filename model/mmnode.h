@@ -18,16 +18,17 @@ public:
     const int MAX_WIDTH = 800;
 
     //MmNode();
-    explicit MmNode(QString text, const MmNode *parent=NULL);
-    explicit MmNode(QString text, int id, const MmNode *parent=NULL);
+    explicit MmNode(QString text, MmNode *parent=NULL);
+    explicit MmNode(QString text, int id, MmNode *parent=NULL);
     ~MmNode();
     const QString& getText() const;
     void setText(QString text);
     MmNode& addChild(QString text);
     MmNode& addChild(QString text, int id);
-    MmNode& addChild(MmNode child);
     MmNode& getChild(int index);
     std::vector<MmNode> getChildren();
+    void removeLastChild();
+
     void setFont(const QFont &font);
     const QFont& getFont();
     QSize getDimensions();
@@ -38,7 +39,7 @@ public:
     int xMargin();
     void setYMargin(int margin);
     void setXMargin(int margin);
-    const MmNode* getParent() const;
+    MmNode *getParent() const;
     int getId() const;
     void paint(int _x, int _y, QPainter &painter);
     const QRect& getTextRect() const;
@@ -49,7 +50,7 @@ private:
     std::vector<MmNode>     m_children;
     QFont                   m_font;
     int                     m_id;
-    const MmNode            *m_parent;
+    MmNode                  *m_parent;
     QRect                   m_textRect;
 
     //Settings

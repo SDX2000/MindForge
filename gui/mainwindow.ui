@@ -35,17 +35,41 @@
     </property>
     <addaction name="actionOpen"/>
    </widget>
+   <widget class="QMenu" name="menuInsert">
+    <property name="title">
+     <string>Insert</string>
+    </property>
+    <addaction name="actionNew_child_node"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuInsert"/>
    <addaction name="menuTools"/>
   </widget>
   <action name="actionOptions">
    <property name="text">
     <string>Options...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionOpen">
    <property name="text">
     <string>Open</string>
+   </property>
+  </action>
+  <action name="actionNew_child_node">
+   <property name="text">
+    <string>New child node</string>
+   </property>
+   <property name="shortcut">
+    <string>Ins</string>
    </property>
   </action>
  </widget>

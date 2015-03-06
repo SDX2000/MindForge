@@ -74,3 +74,8 @@ void MmMainWindow::on_actionOpen_triggered()
     QString folderPath = QFileDialog::getExistingDirectory(this, "Choose input folder");
     openMindMap(folderPath);
 }
+
+void MmMainWindow::on_actionNew_child_node_triggered()
+{
+    m_mindMapWidget.addNode();
+}

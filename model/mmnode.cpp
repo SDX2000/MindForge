@@ -7,7 +7,7 @@ static const int XMARGIN = 30;
 static const int YMARGIN = 27;
 
 
-MmNode::MmNode(QString text, const MmNode *parent)
+MmNode::MmNode(QString text, MmNode *parent)
     : m_text(text)
     , m_parent(parent)
     , m_xMargin(XMARGIN)
@@ -18,7 +18,7 @@ MmNode::MmNode(QString text, const MmNode *parent)
 }
 
 
-MmNode::MmNode(QString text, int id, const MmNode *parent)
+MmNode::MmNode(QString text, int id, MmNode *parent)
     : m_text(text)
     , m_id(id)
     , m_parent(parent)
@@ -49,7 +49,7 @@ int MmNode::getId() const
     return m_id;
 }
 
-const MmNode* MmNode::getParent() const
+MmNode* MmNode::getParent() const
 {
     return m_parent;
 }
@@ -57,20 +57,19 @@ const MmNode* MmNode::getParent() const
 
 MmNode& MmNode::addChild(QString text)
 {
-    m_children.push_back(MmNode(text, getParent()));
+    m_children.push_back(MmNode(text, this));
     return m_children[m_children.size() - 1];
 }
 
 MmNode& MmNode::addChild(QString text, int id)
 {
-    m_children.push_back(MmNode(text, id, getParent()));
+    m_children.push_back(MmNode(text, id, this));
     return m_children[m_children.size() - 1];
 }
 
-MmNode& MmNode::addChild(MmNode child)
+void MmNode::removeLastChild()
 {
-    m_children.push_back(child);
-    return m_children[m_children.size() - 1];
+    m_children.pop_back();
 }
 
 MmNode& MmNode::getChild(int index)

@@ -15,6 +15,8 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     , m_blackPen(Qt::black)
     , m_selectedNode(&m_rootNode)
     , m_rootNode("Root")
+    , m_editor(this)
+    , m_bAddNode(false)
 #ifdef DUMP_FRAMES
     , m_img(800, 550, QImage::Format_RGB32)
     , m_px(400)
@@ -22,6 +24,9 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
 #endif
 {
     m_blackPen.setWidth(2);
+    connect(&m_editor, SIGNAL(editAccepted()), this, SLOT(editAccepted()));
+    connect(&m_editor, SIGNAL(editRejected()), this, SLOT(editRejected()));
+    m_editor.hide();
 }
 
 MmWidget::~MmWidget()
@@ -34,12 +39,15 @@ void MmWidget::setData(const MmNode &node)
     m_rootNode = node;
 }
 
+
 void MmWidget::setBackGround(QColor color)
 {
     QPalette p(palette());
     p.setColor(QPalette::Background, color);
     setPalette(p);
 }
+
+
 
 void MmWidget::resizeEvent(QResizeEvent *)
 {
@@ -53,13 +61,41 @@ MmNode* MmWidget::getSelectedNode()
 
 void MmWidget::editNode()
 {
-
+    QRect rect = getSelectedNode()->getTextRect();
+    m_editor.setPlainText(getSelectedNode()->getText());
+    m_editor.move(rect.topLeft());
+    m_editor.show();
+    m_editor.setFocus();
 }
 
 void MmWidget::addNode()
 {
-
+    m_bAddNode = true;
+    m_selectedNode = &getSelectedNode()->addChild("");
+    update();
+    editNode();
 }
+
+void MmWidget::editAccepted()
+{
+    qDebug()<<"Edit accepted.";
+    m_bAddNode = false;
+    m_selectedNode->setText(m_editor.toPlainText());
+    m_editor.hide();
+    update();
+}
+
+void MmWidget::editRejected()
+{
+    if (m_bAddNode) {
+        m_selectedNode = getSelectedNode()->getParent();
+        m_selectedNode->removeLastChild();
+        m_bAddNode = false;
+    }
+    m_editor.hide();
+    update();
+}
+
 
 #ifdef DUMP_FRAMES
 void MmWidget::imgPrint(QString str, QPainter &painter)
