@@ -16,8 +16,10 @@ public:
     ~MmWidget();
     void setBackGround(QColor color);
     void setData(const MmNode &node);
-    QRect paintNode(int _x, int _y, MmNode node, QPainter &painter);
     MmNode* getSelectedNode();
+    void editNode();
+    void addNode();
+
 
 #ifdef DUMP_FRAMES
     void save();

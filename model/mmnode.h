@@ -39,6 +39,8 @@ public:
     void setXMargin(int margin);
     const MmNode* getParent() const;
     int getId() const;
+    QRect paint(int _x, int _y, QPainter &painter);
+
 
 private:
     QString                 m_text;
