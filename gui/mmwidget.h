@@ -44,7 +44,7 @@ private:
     QSettings           &m_settings;
     MmNode              m_rootNode;
     MmNode              *m_selectedNode;
-    QVector<MmWidget>   m_children;
+    //QVector<MmWidget>   m_children;
     QPen                m_blackPen;
 
 #ifdef DUMP_FRAMES

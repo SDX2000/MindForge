@@ -14,6 +14,7 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     , QWidget(parent)
     , m_blackPen(Qt::black)
     , m_selectedNode(&m_rootNode)
+    , m_rootNode("Root")
 #ifdef DUMP_FRAMES
     , m_img(800, 550, QImage::Format_RGB32)
     , m_px(400)

@@ -32,7 +32,7 @@ MmNode MmLoader::load(QDir baseDir)
     xml.setDevice(&file);
 
 
-    MmNode superRoot;
+    MmNode superRoot("");
 
     stack<MmNode*> nodeStack;
 
@@ -46,7 +46,7 @@ MmNode MmLoader::load(QDir baseDir)
                     QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
                     MmNode &childNode
                             = nodeStack.top()
-                              ->addChild(readAllText(nodeFilePath), id.toInt(), nodeStack.top());
+                              ->addChild(readAllText(nodeFilePath), id.toInt());
                     nodeStack.push(&childNode);
                 }
                 break;
