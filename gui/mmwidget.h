@@ -15,8 +15,9 @@ public:
     explicit MmWidget(QSettings &settings, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
-    void setData(MmNode node);
+    void setData(const MmNode &node);
     QRect paintNode(int _x, int _y, MmNode node, QPainter &painter);
+    MmNode* getSelectedNode();
 
 #ifdef DUMP_FRAMES
     void save();
@@ -40,8 +41,8 @@ public slots:
 private:
     QSettings           &m_settings;
     MmNode              m_rootNode;
+    MmNode              *m_selectedNode;
     QVector<MmWidget>   m_children;
-    QRect               m_nodeBounds;
     QPen                m_blackPen;
 
 #ifdef DUMP_FRAMES

@@ -13,6 +13,7 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     : m_settings(settings)
     , QWidget(parent)
     , m_blackPen(Qt::black)
+    , m_selectedNode(&m_rootNode)
 #ifdef DUMP_FRAMES
     , m_img(800, 550, QImage::Format_RGB32)
     , m_px(400)
@@ -27,7 +28,7 @@ MmWidget::~MmWidget()
 
 }
 
-void MmWidget::setData(MmNode node)
+void MmWidget::setData(const MmNode &node)
 {
     m_rootNode = node;
 }
@@ -42,6 +43,11 @@ void MmWidget::setBackGround(QColor color)
 void MmWidget::resizeEvent(QResizeEvent *)
 {
 
+}
+
+MmNode* MmWidget::getSelectedNode()
+{
+    return m_selectedNode;
 }
 
 #ifdef DUMP_FRAMES
