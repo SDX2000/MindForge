@@ -1,12 +1,12 @@
 #include <QString>
 #include <QtTest>
 
-class MmLoaderTest : public QObject
+class MmMainWindowTest : public QObject
 {
     Q_OBJECT
 
 public:
-    MmLoaderTest();
+    MmMainWindowTest();
 
 private Q_SLOTS:
     void initTestCase();
@@ -14,23 +14,23 @@ private Q_SLOTS:
     void testCase1();
 };
 
-MmLoaderTest::MmLoaderTest()
+MmMainWindowTest::MmMainWindowTest()
 {
 }
 
-void MmLoaderTest::initTestCase()
+void MmMainWindowTest::initTestCase()
 {
 }
 
-void MmLoaderTest::cleanupTestCase()
+void MmMainWindowTest::cleanupTestCase()
 {
 }
 
-void MmLoaderTest::testCase1()
+void MmMainWindowTest::testCase1()
 {
     QVERIFY2(true, "Failure");
 }
 
-QTEST_APPLESS_MAIN(MmLoaderTest)
+QTEST_APPLESS_MAIN(MmMainWindowTest)
 
 #include "tst_mmloadertest.moc"

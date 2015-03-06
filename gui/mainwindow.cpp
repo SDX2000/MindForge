@@ -58,15 +58,19 @@ void MmMainWindow::on_actionOptions_triggered()
     od.exec();
 }
 
-void MmMainWindow::on_actionOpen_triggered()
+void MmMainWindow::openMindMap(QString path)
 {
-    QString folderPath = QFileDialog::getExistingDirectory(this, "Choose input folder");
-
     try {
-        MmNode root = MmLoader::load(QDir(folderPath));
+        MmNode root = MmLoader::load(QDir(path));
         m_mindMapWidget.setData(root);
     }
     catch(BadFile &ex) {
         QMessageBox::warning(this, "Could not open mind map.", ex.message());
     }
+}
+
+void MmMainWindow::on_actionOpen_triggered()
+{
+    QString folderPath = QFileDialog::getExistingDirectory(this, "Choose input folder");
+    openMindMap(folderPath);
 }

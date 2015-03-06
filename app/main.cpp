@@ -21,6 +21,8 @@ int main(int argc, char *argv[])
 
     MmMainWindow w;
 
+    w.openMindMap("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\basic");
+
     w.show();
 
     return app.exec();

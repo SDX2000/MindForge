@@ -17,7 +17,7 @@ class MmMainWindow : public QMainWindow
 public:
     explicit MmMainWindow(QWidget *parent = 0);
     ~MmMainWindow();
-
+    void openMindMap(QString path);
 
 
 protected:
@@ -25,7 +25,6 @@ protected:
 
 private slots:
     void on_actionOptions_triggered();
-
     void on_actionOpen_triggered();
 
 private:
