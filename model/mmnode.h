@@ -18,11 +18,12 @@ public:
     const int MAX_WIDTH = 800;
 
     MmNode();
-    explicit MmNode(QString text);
+    explicit MmNode(QString text, int id);
     ~MmNode();
     const QString& getText() const;
     void setText(QString text);
     MmNode& addChild(QString text);
+    MmNode& addChild(QString text, int id);
     MmNode& addChild(MmNode child);
     MmNode& getChild(int index);
     std::vector<MmNode> getChildren();
@@ -42,6 +43,7 @@ private:
     QSize                   m_size;
     std::vector<MmNode>     m_children;
     QFont                   m_font;
+    int                     m_id;
 
     //Settings
 private:
@@ -50,6 +52,10 @@ private:
 
     const char*     YMARGIN_KEY = "mindmap/ymargin";
     int             m_yMargin;
+
+    //Static members
+private:
+    static int      sm_lastId;
 };
 
 #endif // MMNODEDATA_H

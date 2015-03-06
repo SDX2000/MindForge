@@ -12,8 +12,6 @@
 MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     : m_settings(settings)
     , QWidget(parent)
-    , m_xMargin(30)
-    , m_yMargin(27)
     , m_blackPen(Qt::black)
 #ifdef DUMP_FRAMES
     , m_img(800, 550, QImage::Format_RGB32)

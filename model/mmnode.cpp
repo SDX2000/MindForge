@@ -1,19 +1,28 @@
 #include "mmnode.h"
 
 
+int MmNode::sm_lastId = 0;
+
+static const int XMARGIN = 30;
+static const int YMARGIN = 27;
+
+
 MmNode::MmNode()
-    : m_xMargin(30)
-    , m_yMargin(27)
+    : m_xMargin(XMARGIN)
+    , m_yMargin(YMARGIN)
 {
     updateDimensions();
+    m_id = ++sm_lastId;
 }
 
-MmNode::MmNode(QString text)
+MmNode::MmNode(QString text, int id)
     : m_text(text)
-    , m_xMargin(30)
-    , m_yMargin(27)
+    , m_id(id)
+    , m_xMargin(XMARGIN)
+    , m_yMargin(YMARGIN)
 {
     updateDimensions();
+    sm_lastId = max(sm_lastId, id);
 }
 
 MmNode::~MmNode()
@@ -33,7 +42,15 @@ void MmNode::setText(QString text)
 
 MmNode& MmNode::addChild(QString text)
 {
-    m_children.push_back(MmNode(text));
+    m_children.push_back(MmNode());
+    MmNode &node = m_children[m_children.size() - 1];
+    node.setText(text);
+    return node;
+}
+
+MmNode& MmNode::addChild(QString text, int id)
+{
+    m_children.push_back(MmNode(text, id));
     return m_children[m_children.size() - 1];
 }
 

@@ -44,14 +44,6 @@ private:
     QRect               m_nodeBounds;
     QPen                m_blackPen;
 
-    //Settings
-private:
-    const char*     XMARGIN_KEY = "mindmap/xmargin";
-    int             m_xMargin;
-
-    const char*     YMARGIN_KEY = "mindmap/ymargin";
-    int             m_yMargin;
-
 #ifdef DUMP_FRAMES
     int m_serial=0;
     int m_px;
