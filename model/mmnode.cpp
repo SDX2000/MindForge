@@ -163,21 +163,21 @@ QRect MmNode::paint(int _x, int _y, QPainter &painter)
     int x = _x;
     int y = _y - nodeSize.height()/2;
 
+
     painter.setPen(QPen(Qt::black, 2));
 
     //Draw node text
     QRect targetRect(x, y, nodeSize.width(), nodeSize.height());
-    QRect br;
     painter.drawText(targetRect
                      , Qt::TextWordWrap
                      , getText()
-                     , &br);
+                     , &m_textRect);
 
     //Draw the line under the node text.
-    painter.drawLine(br.bottomLeft(), br.bottomRight());
+    painter.drawLine(m_textRect.bottomLeft(), m_textRect.bottomRight());
 
     if(getChildren().empty()) {
-        return br;
+        return m_textRect;
     }
 
     const int Y_ADJUST = 0;
@@ -187,28 +187,28 @@ QRect MmNode::paint(int _x, int _y, QPainter &painter)
 
     //Move to the right clearing the width of the current node
     //plus some margin space
-    _x += br.width() + xMargin();
+    _x += m_textRect.width() + xMargin();
 
 
     foreach(MmNode childNode, getChildren()) {
         _y += childNode.getTreeHeight()/2;
 
         //Draw child node
-        QRect childBr = childNode.paint(_x, _y, painter);
+        QRect childTextRect = childNode.paint(_x, _y, painter);
 
         //Draw connector from parent node to child node
         QPainterPath path;
-        path.moveTo(br.right(), br.bottom());
+        path.moveTo(m_textRect.right(), m_textRect.bottom());
 
-        const int cpX = br.right() + xMargin()/2;
-        path.cubicTo(cpX, br.bottom(),
-                     cpX, childBr.bottom(),
-                     childBr.left(), childBr.bottom());
+        const int cpX = m_textRect.right() + xMargin()/2;
+        path.cubicTo(cpX, m_textRect.bottom(),
+                     cpX, childTextRect.bottom(),
+                     childTextRect.left(), childTextRect.bottom());
         painter.drawPath(path);
 
         //Increment y for next child node.
         _y += childNode.getTreeHeight()/2 + childNode.yMargin();
     }
 
-    return br;
+    return m_textRect;
 }

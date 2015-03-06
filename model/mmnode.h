@@ -50,6 +50,7 @@ private:
     QFont                   m_font;
     int                     m_id;
     const MmNode            *m_parent;
+    QRect                   m_textRect;
 
     //Settings
 private:
