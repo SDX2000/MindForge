@@ -10,17 +10,19 @@
 class BadFile: public std::exception
 {
     QString m_message;
+    QByteArray m_baMessage;
 public:
 
     BadFile(QString filePath)
       : m_message(filePath)
+      , m_baMessage(filePath.toUtf8())
     {
 
     }
 
     virtual const char* what() const
     {
-        return m_message.toUtf8().constData();
+        return m_baMessage.constData();
     }
 
     QString message() const
