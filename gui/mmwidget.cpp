@@ -130,7 +130,9 @@ void MmWidget::paintEvent(QPaintEvent *)
 
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    m_rootNode.updateLayout(m_rootNode.xMargin(), height()/2);
+    m_rootNode.setPos(m_rootNode.xMargin()
+                      , height()/2 - m_rootNode.getTextRect().height()/2);
+    m_rootNode.updateLayout();
     m_rootNode.paint(painter);
     SAVE();
 }

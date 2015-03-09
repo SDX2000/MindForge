@@ -20,6 +20,8 @@ public:
     ~MmNode();
     const QString& getText() const;
     void setText(QString text);
+    void setPos(int x, int y);
+
     MmNode& addChild(QString text);
     MmNode& addChild(QString text, int id);
     MmNode& getChild(int index);
@@ -39,7 +41,7 @@ public:
     MmNode *getParent() const;
     int getId() const;
     void paint(QPainter &painter);
-    void updateLayout(int _x, int _y);
+    void updateLayout();
 
 protected:
     void updateTextRect();

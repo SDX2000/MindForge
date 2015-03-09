@@ -180,21 +180,21 @@ const QRect& MmNode::getTextRect() const
     return m_textRect;
 }
 
-void MmNode::updateLayout(int _x, int _y)
+void MmNode::setPos(int x, int y)
 {
-    //updateTextRect();
-    //Calculate the coordinates of the top-left point of the rectangle
-    //in which the node text will be rendered
-    int x = _x;
-    int y = _y - m_textRect.height()/2;
-
     m_textRect.setRect(x, y, m_textRect.width(), m_textRect.height());
+}
 
+void MmNode::updateLayout()
+{
     if(getChildren().empty()) {
         return;
     }
 
     const int Y_ADJUST = 0;
+
+    int _x = m_textRect.x();
+    int _y = m_textRect.y();
 
     //Move to top of child tree frame
     _y -= getTreeHeight()/2 + Y_ADJUST;
@@ -203,14 +203,14 @@ void MmNode::updateLayout(int _x, int _y)
     //plus some margin space
     _x += m_textRect.width() + xMargin();
 
-    //foreach(MmNode childNode, getChildren()) {
     for (int i = 0; i < m_children.size(); ++i) {
         MmNode &childNode = m_children[i];
 
         _y += childNode.getTreeHeight()/2;
 
-        //Draw child node
-        childNode.updateLayout(_x, _y);
+        childNode.setPos(_x, _y);
+
+        childNode.updateLayout();
 
         //Increment y for next child node.
         _y += childNode.getTreeHeight()/2 + childNode.yMargin();
@@ -235,7 +235,6 @@ void MmNode::paint(QPainter &painter)
         return;
     }
 
-    //foreach(MmNode childNode, getChildren()) {
     for (int i = 0; i < m_children.size(); ++i) {
         MmNode &childNode = m_children[i];
         //Draw child node
