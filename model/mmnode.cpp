@@ -187,7 +187,7 @@ void MmNode::setPos(int x, int y)
 
 void MmNode::updateLayout()
 {
-    if(getChildren().empty()) {
+    if(m_children.empty()) {
         return;
     }
 
@@ -230,10 +230,6 @@ void MmNode::paint(QPainter &painter)
 
     //Draw the line under the node text.
     painter.drawLine(m_textRect.bottomLeft(), m_textRect.bottomRight());
-
-    if(getChildren().empty()) {
-        return;
-    }
 
     for (int i = 0; i < m_children.size(); ++i) {
         MmNode &childNode = m_children[i];
