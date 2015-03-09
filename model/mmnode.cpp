@@ -1,3 +1,4 @@
+#include "common.h"
 #include "mmnode.h"
 
 
@@ -133,6 +134,7 @@ void MmNode::updateTextRect()
     }
 
     QFontMetrics fm(m_font);
+
     m_textRect = fm.boundingRect(m_textRect.x(), m_textRect.y(), MAX_WIDTH, 0
                            , Qt::AlignLeft | Qt::TextWordWrap
                            , text);
@@ -178,27 +180,15 @@ const QRect& MmNode::getTextRect() const
     return m_textRect;
 }
 
-void MmNode::paint(int _x, int _y, QPainter &painter)
+void MmNode::updateLayout(int _x, int _y)
 {
-    QSize nodeSize = m_textRect.size();
-
+    //updateTextRect();
     //Calculate the coordinates of the top-left point of the rectangle
     //in which the node text will be rendered
     int x = _x;
-    int y = _y - nodeSize.height()/2;
+    int y = _y - m_textRect.height()/2;
 
-
-    painter.setPen(QPen(Qt::black, 2));
-
-    //Draw node text
-    QRect targetRect(x, y, nodeSize.width(), nodeSize.height());
-    painter.drawText(targetRect
-                     , Qt::TextWordWrap
-                     , getText()
-                     , &m_textRect);
-
-    //Draw the line under the node text.
-    painter.drawLine(m_textRect.bottomLeft(), m_textRect.bottomRight());
+    m_textRect.setRect(x, y, m_textRect.width(), m_textRect.height());
 
     if(getChildren().empty()) {
         return;
@@ -213,24 +203,54 @@ void MmNode::paint(int _x, int _y, QPainter &painter)
     //plus some margin space
     _x += m_textRect.width() + xMargin();
 
+    //foreach(MmNode childNode, getChildren()) {
+    for (int i = 0; i < m_children.size(); ++i) {
+        MmNode &childNode = m_children[i];
 
-    foreach(MmNode childNode, getChildren()) {
         _y += childNode.getTreeHeight()/2;
 
         //Draw child node
-        childNode.paint(_x, _y, painter);
-        QRect childTextRect = childNode.getTextRect();
+        childNode.updateLayout(_x, _y);
+
+        //Increment y for next child node.
+        _y += childNode.getTreeHeight()/2 + childNode.yMargin();
+    }
+}
+
+
+void MmNode::paint(QPainter &painter)
+{
+    painter.setPen(QPen(Qt::black, 2));
+
+    //Draw node text
+    painter.drawText(m_textRect
+                     , Qt::TextWordWrap
+                     , getText()
+                     , &m_textRect);
+
+    //Draw the line under the node text.
+    painter.drawLine(m_textRect.bottomLeft(), m_textRect.bottomRight());
+
+    if(getChildren().empty()) {
+        return;
+    }
+
+    //foreach(MmNode childNode, getChildren()) {
+    for (int i = 0; i < m_children.size(); ++i) {
+        MmNode &childNode = m_children[i];
+        //Draw child node
+        childNode.paint(painter);
+
         //Draw connector from parent node to child node
+        QRect childTextRect = childNode.getTextRect();
+
         QPainterPath path;
         path.moveTo(m_textRect.right(), m_textRect.bottom());
-
         const int cpX = m_textRect.right() + xMargin()/2;
         path.cubicTo(cpX, m_textRect.bottom(),
                      cpX, childTextRect.bottom(),
                      childTextRect.left(), childTextRect.bottom());
-        painter.drawPath(path);
 
-        //Increment y for next child node.
-        _y += childNode.getTreeHeight()/2 + childNode.yMargin();
+        painter.drawPath(path);
     }
 }

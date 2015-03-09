@@ -9,9 +9,6 @@
 #include <QString>
 #include <vector>
 
-#include "common.h"
-
-
 class MmNode
 {
 public:
@@ -32,7 +29,7 @@ public:
     void setFont(const QFont &font);
     const QFont& getFont();
     const QRect& getTextRect() const;
-    void updateTextRect();
+
     int getTreeHeight();
     const MmNode& operator = (const MmNode& rhs);
     int yMargin();
@@ -41,8 +38,11 @@ public:
     void setXMargin(int margin);
     MmNode *getParent() const;
     int getId() const;
-    void paint(int _x, int _y, QPainter &painter);
+    void paint(QPainter &painter);
+    void updateLayout(int _x, int _y);
 
+protected:
+    void updateTextRect();
 
 private:
     QString                 m_text;

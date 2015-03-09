@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     MmMainWindow w;
 
-    w.openMindMap("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\basic1");
+    w.openMindMap("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\basic2");
 
     w.show();
 

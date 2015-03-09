@@ -14,7 +14,6 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     , QWidget(parent)
     , m_blackPen(Qt::black)
     , m_selectedNode(&m_rootNode)
-    , m_rootNode("Root")
     , m_editor(this)
     , m_bAddNode(false)
 #ifdef DUMP_FRAMES
@@ -110,7 +109,6 @@ void MmWidget::imgPrint(QString str, QPainter &painter)
     save();
 }
 
-
 void MmWidget::save()
 {
     m_img.save(QString("mm%1.png").arg(m_serial++));
@@ -132,6 +130,7 @@ void MmWidget::paintEvent(QPaintEvent *)
 
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    m_rootNode.paint(m_rootNode.xMargin(), height()/2, painter);
+    m_rootNode.updateLayout(m_rootNode.xMargin(), height()/2);
+    m_rootNode.paint(painter);
     SAVE();
 }
