@@ -11,6 +11,7 @@ MmNode::MmNode(MmNode *parent)
     : m_parent(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
+    , m_textRect(0, 0, 0, 0)
 {
     updateTextRect();
     m_id = ++sm_lastId;
@@ -21,6 +22,7 @@ MmNode::MmNode(QString text, MmNode *parent)
     , m_parent(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
+    , m_textRect(0, 0, 0, 0)
 {
     updateTextRect();
     m_id = ++sm_lastId;
@@ -33,6 +35,7 @@ MmNode::MmNode(QString text, int id, MmNode *parent)
     , m_parent(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
+    , m_textRect(0, 0, 0, 0)
 {
     updateTextRect();
     sm_lastId = max(sm_lastId, id);
@@ -158,9 +161,14 @@ int MmNode::getTreeHeight()
 const MmNode& MmNode::operator = (const MmNode& rhs)
 {
     m_text      = rhs.m_text;
-    m_textRect  = rhs.m_textRect;
     m_children  = rhs.m_children;
     m_font      = rhs.m_font;
+    m_id        = rhs.m_id;
+    m_parent    = rhs.m_parent;
+    m_textRect  = rhs.m_textRect;
+    m_xMargin   = rhs.m_xMargin;
+    m_yMargin   = rhs.m_yMargin;
+
     return *this;
 }
 
