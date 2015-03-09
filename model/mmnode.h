@@ -17,7 +17,7 @@ class MmNode
 public:
     const int MAX_WIDTH = 800;
 
-    //MmNode();
+    explicit MmNode(MmNode *parent=NULL);
     explicit MmNode(QString text, MmNode *parent=NULL);
     explicit MmNode(QString text, int id, MmNode *parent=NULL);
     ~MmNode();
@@ -31,8 +31,8 @@ public:
 
     void setFont(const QFont &font);
     const QFont& getFont();
-    QSize getDimensions();
-    void updateDimensions();
+    const QRect& getTextRect() const;
+    void updateTextRect();
     int getTreeHeight();
     const MmNode& operator = (const MmNode& rhs);
     int yMargin();
@@ -42,11 +42,10 @@ public:
     MmNode *getParent() const;
     int getId() const;
     void paint(int _x, int _y, QPainter &painter);
-    const QRect& getTextRect() const;
+
 
 private:
     QString                 m_text;
-    QSize                   m_size;
     std::vector<MmNode>     m_children;
     QFont                   m_font;
     int                     m_id;

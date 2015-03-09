@@ -72,7 +72,6 @@ void MmWidget::addNode()
 {
     m_bAddNode = true;
     m_selectedNode = &getSelectedNode()->addChild("");
-    update();
     editNode();
 }
 

@@ -7,13 +7,22 @@ static const int XMARGIN = 30;
 static const int YMARGIN = 27;
 
 
+MmNode::MmNode(MmNode *parent)
+    : m_parent(parent)
+    , m_xMargin(XMARGIN)
+    , m_yMargin(YMARGIN)
+{
+    updateTextRect();
+    m_id = ++sm_lastId;
+}
+
 MmNode::MmNode(QString text, MmNode *parent)
     : m_text(text)
     , m_parent(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
 {
-    updateDimensions();
+    updateTextRect();
     m_id = ++sm_lastId;
 }
 
@@ -25,7 +34,7 @@ MmNode::MmNode(QString text, int id, MmNode *parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
 {
-    updateDimensions();
+    updateTextRect();
     sm_lastId = max(sm_lastId, id);
 }
 
@@ -41,7 +50,7 @@ const QString& MmNode::getText() const
 void MmNode::setText(QString text)
 {
     m_text = text;
-    updateDimensions();
+    updateTextRect();
 }
 
 int MmNode::getId() const
@@ -85,17 +94,12 @@ std::vector<MmNode> MmNode::getChildren()
 void MmNode::setFont(const QFont &font)
 {
     m_font = font;
-    updateDimensions();
+    updateTextRect();
 }
 
 const QFont& MmNode::getFont()
 {
     return m_font;
-}
-
-QSize MmNode::getDimensions()
-{
-    return m_size;
 }
 
 int MmNode::yMargin()
@@ -118,18 +122,23 @@ void MmNode::setXMargin(int margin)
     m_xMargin = margin;
 }
 
-void MmNode::updateDimensions()
+void MmNode::updateTextRect()
 {
+    QString text = m_text;
+    if(!text.length()) {
+        text = "WWW"; //Reserve space wide enough for 3 Ws atleast.
+    }
+
     QFontMetrics fm(m_font);
-    m_size = fm.boundingRect(0 ,0 , MAX_WIDTH, 0
+    m_textRect = fm.boundingRect(m_textRect.x(), m_textRect.y(), MAX_WIDTH, 0
                            , Qt::AlignLeft | Qt::TextWordWrap
-                           , m_text).size();
+                           , text);
 }
 
 int MmNode::getTreeHeight()
 {
     if (m_children.empty())
-        return m_size.height();
+        return m_textRect.height();
 
     int treeHeight = 0;
 
@@ -140,13 +149,16 @@ int MmNode::getTreeHeight()
 
     treeHeight += ((int)m_children.size() -  1) * yMargin();
 
-    return max(treeHeight, m_size.height());
+    //TODO: Check if we need to add treeHeight/2 to m_size.height()
+    //for the case when the node height is greater than the height of the child
+    //subtree but part (half) of the child subtree is sticking out of the bottom.
+    return max(treeHeight, m_textRect.height());
 }
 
 const MmNode& MmNode::operator = (const MmNode& rhs)
 {
     m_text      = rhs.m_text;
-    m_size      = rhs.m_size;
+    m_textRect  = rhs.m_textRect;
     m_children  = rhs.m_children;
     m_font      = rhs.m_font;
     return *this;
@@ -160,7 +172,7 @@ const QRect& MmNode::getTextRect() const
 
 void MmNode::paint(int _x, int _y, QPainter &painter)
 {
-    QSize nodeSize = getDimensions();
+    QSize nodeSize = m_textRect.size();
 
     //Calculate the coordinates of the top-left point of the rectangle
     //in which the node text will be rendered
