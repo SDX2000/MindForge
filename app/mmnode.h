@@ -4,6 +4,8 @@
 #include <QCoreApplication>
 #include <QFont>
 #include <QFontMetrics>
+#include <QLabel>
+#include <QLayout>
 #include <QObject>
 #include <QPainter>
 #include <QString>
@@ -18,41 +20,40 @@ public:
     explicit MmNode(QString text, MmNode *parent=NULL);
     explicit MmNode(QString text, int id, MmNode *parent=NULL);
     ~MmNode();
-    const QString& getText() const;
+    QString getText() const;
     void setText(QString text);
     void setPos(int x, int y);
 
     MmNode& addChild(QString text);
     MmNode& addChild(QString text, int id);
     MmNode& getChild(int index);
-    std::vector<MmNode> getChildren();
     void removeLastChild();
+
+    MmNode *getParent() const;
 
     void setFont(const QFont &font);
     const QFont& getFont();
-    const QRect& getTextRect() const;
 
-    int getTreeHeight();
-    const MmNode& operator = (const MmNode& rhs);
     int yMargin();
     int xMargin();
     void setYMargin(int margin);
     void setXMargin(int margin);
-    MmNode *getParent() const;
+
     int getId() const;
-    void paint(QPainter &painter);
-    void updateLayout();
+    QLayout* getLayout();
+
+    //const MmNode& operator = (const MmNode& rhs);
 
 protected:
     void updateTextRect();
 
 private:
-    QString                 m_text;
     std::vector<MmNode>     m_children;
-    QFont                   m_font;
     int                     m_id;
-    MmNode                  *m_parent;
-    QRect                   m_textRect;
+    MmNode                 *m_parent;
+    QHBoxLayout            *m_pHBox;
+    QVBoxLayout            *m_pVBox;
+    QLabel                 *m_pLabel;
 
     //Settings
 private:

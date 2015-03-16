@@ -61,8 +61,9 @@ void MmMainWindow::on_actionOptions_triggered()
 void MmMainWindow::openMindMap(QString path)
 {
     try {
-        MmNode root = MmLoader::load(QDir(path));
+        MmNode* root = MmLoader::load(QDir(path));
         m_mindMapWidget.setData(root);
+        updateGeometry();
     }
     catch(BadFile &ex) {
         QMessageBox::warning(this, "Could not open mind map.", ex.message());
