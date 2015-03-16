@@ -2,9 +2,8 @@
 
 TEMPLATE = subdirs
 
-SUBDIRS = gui \
+SUBDIRS = \
     lz4 \
-    model \
     test
 
 CONFIG += ordered

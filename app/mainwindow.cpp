@@ -8,7 +8,7 @@
 #include "ui_mainwindow.h"
 #include "common.h"
 #include "optionsdialog.h"
-#include "model/mmloader.h"
+#include "mmloader.h"
 
 MmMainWindow::MmMainWindow(QWidget *parent)
     : QMainWindow(parent)

@@ -1,10 +1,10 @@
 #include <QApplication>
 #include <QFileDialog>
 
-#include "gui/mainwindow.h"
-#include "gui/mmwidget.h"
-#include "model/mmnode.h"
-#include "model/mmloader.h"
+#include "mainwindow.h"
+#include "mmwidget.h"
+#include "mmnode.h"
+#include "mmloader.h"
 
 
 int main(int argc, char *argv[])
