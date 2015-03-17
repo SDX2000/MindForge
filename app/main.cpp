@@ -1,10 +1,11 @@
 #include <QApplication>
 #include <QFileDialog>
 
+#include <direct.h>
+
 #include "mainwindow.h"
 #include "mmwidget.h"
 #include "mmnode.h"
-#include "mmloader.h"
 
 
 int main(int argc, char *argv[])
@@ -20,11 +21,8 @@ int main(int argc, char *argv[])
     app.setFont(font);
 
     MmMainWindow w;
-//    QSettings settings;
-//    MmWidget w(settings);
-
-    w.openMindMap("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\basic2");
-
+    _chdir("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\");
+    w.openMindMap("basic2");
     w.show();
 
     return app.exec();

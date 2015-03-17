@@ -4,11 +4,16 @@
 #include <QPainter>
 #include <QDebug>
 #include <QEvent>
+#include <QXmlStreamReader>
 
+#include <stack>
 
+#include "exceptions.h"
 #include "mmwidget.h"
-#include "common.h"
-#include "mmloader.h"
+#include "utils.h"
+
+using namespace std;
+
 
 MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     : m_settings(settings)
@@ -29,20 +34,66 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     setStyleSheet("border: 1px solid red");
 }
 
+MmNodeWidget* MmWidget::load(QDir baseDir)
+{
+    QString filePath = baseDir.absoluteFilePath("nodes.mf");
+    QFile file(filePath);
+
+    if(!file.open(QIODevice::ReadOnly))
+        throw BadFile(filePath);
+
+    QXmlStreamReader xml;
+
+    xml.setDevice(&file);
+
+    MmNodeWidget *superRoot = new  MmNodeWidget("");
+
+    stack<MmNodeWidget*> nodeStack;
+
+    nodeStack.push(superRoot);
+
+    while (!xml.atEnd()) {
+        switch(xml.readNext()) {
+            case QXmlStreamReader::StartElement:
+                if (xml.name() == "node") {
+                    QString id = xml.attributes().value("ID").toString();
+                    QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
+                    QString nodeText = readAllText(nodeFilePath);
+                    MmNodeWidget *childNode
+                        = nodeStack.top()->addChild(nodeText, id.toInt());
+                    nodeStack.push(childNode);
+                }
+                break;
+            case QXmlStreamReader::EndElement:
+                if (xml.name() == "node") {
+                    nodeStack.pop();
+                }
+                break;
+        }
+    }
+
+    MmNodeWidget * root = superRoot->getChild(0);
+    root->setParent(NULL);
+    delete superRoot;
+
+    return root;
+}
+
 void MmWidget::openMindMap(QString path)
 {
-    try {
-        m_rootNode = MmLoader::load(QDir(path));
-        m_rootNode->setParent(this);
+    if (m_rootNode) {
+        m_rootNode->setParent(NULL);
+        safe_delete(m_rootNode);
     }
-    catch(BadFile &ex) {
-        QMessageBox::warning(this, "Could not open mind map.", ex.message());
-    }
+
+    m_rootNode = load(QDir(path));
+    m_rootNode->setParent(this);
+    m_rootNode->show();
 }
 
 MmWidget::~MmWidget()
 {
-    delete m_rootNode;
+    safe_delete(m_rootNode);
 }
 
 void MmWidget::setData(MmNodeWidget *node)

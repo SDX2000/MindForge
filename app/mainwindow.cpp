@@ -4,11 +4,12 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#include "utils.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "common.h"
 #include "optionsdialog.h"
-#include "mmloader.h"
+#include "exceptions.h"
+
 
 MmMainWindow::MmMainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,8 +20,6 @@ MmMainWindow::MmMainWindow(QWidget *parent)
 
     m_bgColor = m_settings.value(BGCOLOR_KEY, QColor(Qt::white)).value<QColor>();
     m_mindMapWidget.setBackGround(m_bgColor);
-
-
 
     setCentralWidget(&m_mindMapWidget);
 
@@ -61,9 +60,7 @@ void MmMainWindow::on_actionOptions_triggered()
 void MmMainWindow::openMindMap(QString path)
 {
     try {
-        MmNodeWidget* root = MmLoader::load(QDir(path));
-        m_mindMapWidget.setData(root);
-        updateGeometry();
+        m_mindMapWidget.openMindMap(path);
     }
     catch(BadFile &ex) {
         QMessageBox::warning(this, "Could not open mind map.", ex.message());
@@ -73,7 +70,9 @@ void MmMainWindow::openMindMap(QString path)
 void MmMainWindow::on_actionOpen_triggered()
 {
     QString folderPath = QFileDialog::getExistingDirectory(this, "Choose input folder");
-    openMindMap(folderPath);
+    if (!folderPath.isEmpty()) {
+        openMindMap(folderPath);
+    }
 }
 
 void MmMainWindow::on_actionNew_child_node_triggered()

@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <QDebug>
+#include <QString>
 
 template <typename T>
 void safe_delete(T *&ptr)
@@ -23,6 +24,7 @@ T min(T t, T u)
     return t > u? t: u;
 }
 
+QString readAllText(QString filePath);
 
 #define QDBG        qDebug().nospace()
 #define SHOW(X)     #X "=" << (X) <<", "

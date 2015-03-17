@@ -11,6 +11,7 @@
 #include <QVector>
 #include <QTextEdit>
 #include <QPlainTextEdit>
+#include <QDir>
 
 class MmWidget : public QWidget
 {
@@ -23,8 +24,8 @@ public:
     MmNodeWidget* getSelectedNode();
     void editNode();
     void addNode();
-
     void openMindMap(QString path);
+
 
     //Constants
 public:
@@ -35,6 +36,9 @@ signals:
 public slots:
     void editAccepted();
     void editRejected();
+
+private:
+    MmNodeWidget* load(QDir baseDir);
 
 private:
     QSettings          &m_settings;
