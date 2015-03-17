@@ -1,3 +1,4 @@
+- Draw connectors
 - Add support for editing nodes.
 - Add support for saving the mindmap.
 - Implement node selection/deselection using keyboard and mouse.
