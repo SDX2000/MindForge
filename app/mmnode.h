@@ -22,6 +22,8 @@ public:
     explicit MmNodeWidget(QString text, QWidget *parent=NULL);
     explicit MmNodeWidget(QString text, int id, QWidget *parent=NULL);
     ~MmNodeWidget();
+
+
     QString getText() const;
     void setText(QString text);
     void setPos(int x, int y);
@@ -37,6 +39,9 @@ public:
     void setXMargin(int margin);
 
     int getId() const;
+
+private:
+    void init(QString text, int id);
 
 private:
     std::vector<MmNodeWidget*>  m_children;

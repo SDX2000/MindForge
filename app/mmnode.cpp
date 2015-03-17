@@ -1,4 +1,4 @@
-#include "common.h"
+#include "utils.h"
 #include "mmnode.h"
 
 
@@ -16,11 +16,7 @@ MmNodeWidget::MmNodeWidget(QWidget *parent)
     , m_pVBox(new QVBoxLayout())
     , m_pLabel(new QLabel())
 {
-    m_id = ++sm_lastId;
-    setStyleSheet("border: 1px solid red");
-    setLayout(m_pHBox);
-    m_pHBox->addWidget(m_pLabel);
-    m_pHBox->addLayout(m_pVBox);
+    init("", sm_lastId + 1);
 }
 
 MmNodeWidget::MmNodeWidget(QString text, QWidget *parent)
@@ -32,12 +28,7 @@ MmNodeWidget::MmNodeWidget(QString text, QWidget *parent)
     , m_pLabel(new QLabel())
 
 {
-    m_pLabel->setText(text);
-    m_id = ++sm_lastId;
-    setStyleSheet("border: 1px solid red");
-    setLayout(m_pHBox);
-    m_pHBox->addWidget(m_pLabel);
-    m_pHBox->addLayout(m_pVBox);
+    init(text, sm_lastId + 1);
 }
 
 
@@ -50,11 +41,18 @@ MmNodeWidget::MmNodeWidget(QString text, int id, QWidget *parent)
     , m_pVBox(new QVBoxLayout())
     , m_pLabel(new QLabel())
 {
+    init(text, id);
+}
+
+
+void MmNodeWidget::init(QString text, int id)
+{
     m_pLabel->setText(text);
     sm_lastId = max(sm_lastId, id);
     setStyleSheet("border: 1px solid red");
     setLayout(m_pHBox);
     m_pHBox->addWidget(m_pLabel);
+    m_pHBox->addSpacing(m_xMargin);
     m_pHBox->addLayout(m_pVBox);
 }
 
