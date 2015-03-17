@@ -34,7 +34,7 @@ public:
 class MmLoader
 {
 public:
-    static MmNode* load(QDir baseDir);
+    static MmNodeWidget* load(QDir baseDir);
 };
 
 #endif // MMMODEL_H

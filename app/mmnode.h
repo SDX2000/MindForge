@@ -2,6 +2,7 @@
 #define MMNODEDATA_H
 
 #include <QCoreApplication>
+#include <QWidget>
 #include <QFont>
 #include <QFontMetrics>
 #include <QLabel>
@@ -11,28 +12,24 @@
 #include <QString>
 #include <vector>
 
-class MmNode
+class MmNodeWidget : public QWidget
 {
+    Q_OBJECT
 public:
     const int MAX_WIDTH = 800;
 
-    explicit MmNode(MmNode *parent=NULL);
-    explicit MmNode(QString text, MmNode *parent=NULL);
-    explicit MmNode(QString text, int id, MmNode *parent=NULL);
-    ~MmNode();
+    explicit MmNodeWidget(QWidget *parent = 0);
+    explicit MmNodeWidget(QString text, QWidget *parent=NULL);
+    explicit MmNodeWidget(QString text, int id, QWidget *parent=NULL);
+    ~MmNodeWidget();
     QString getText() const;
     void setText(QString text);
     void setPos(int x, int y);
 
-    MmNode& addChild(QString text);
-    MmNode& addChild(QString text, int id);
-    MmNode& getChild(int index);
+    MmNodeWidget* addChild(QString text);
+    MmNodeWidget* addChild(QString text, int id);
+    MmNodeWidget* getChild(int index);
     void removeLastChild();
-
-    MmNode *getParent() const;
-
-    void setFont(const QFont &font);
-    const QFont& getFont();
 
     int yMargin();
     int xMargin();
@@ -40,20 +37,13 @@ public:
     void setXMargin(int margin);
 
     int getId() const;
-    QLayout* getLayout();
-
-    //const MmNode& operator = (const MmNode& rhs);
-
-protected:
-    void updateTextRect();
 
 private:
-    std::vector<MmNode>     m_children;
-    int                     m_id;
-    MmNode                 *m_parent;
-    QHBoxLayout            *m_pHBox;
-    QVBoxLayout            *m_pVBox;
-    QLabel                 *m_pLabel;
+    std::vector<MmNodeWidget*>  m_children;
+    int                         m_id;
+    QHBoxLayout                *m_pHBox;
+    QVBoxLayout                *m_pVBox;
+    QLabel                     *m_pLabel;
 
     //Settings
 private:

@@ -20,7 +20,7 @@ QString readAllText(QString filePath)
 }
 
 
-MmNode* MmLoader::load(QDir baseDir)
+MmNodeWidget* MmLoader::load(QDir baseDir)
 {
     QString filePath = baseDir.absoluteFilePath("nodes.mf");
     QFile file(filePath);
@@ -32,10 +32,9 @@ MmNode* MmLoader::load(QDir baseDir)
 
     xml.setDevice(&file);
 
-    //TODO: Properly dispose off superRoot (this is causing a memory leak right now).
-    MmNode *superRoot = new  MmNode("");
+    MmNodeWidget *superRoot = new  MmNodeWidget("");
 
-    stack<MmNode*> nodeStack;
+    stack<MmNodeWidget*> nodeStack;
 
     nodeStack.push(superRoot);
 
@@ -46,10 +45,9 @@ MmNode* MmLoader::load(QDir baseDir)
                     QString id = xml.attributes().value("ID").toString();
                     QString nodeFilePath = baseDir.absoluteFilePath(QString("nodes/") + id);
                     QString nodeText = readAllText(nodeFilePath);
-                    MmNode &childNode
-                            = nodeStack.top()
-                              ->addChild(nodeText, id.toInt());
-                    nodeStack.push(&childNode);
+                    MmNodeWidget *childNode
+                        = nodeStack.top()->addChild(nodeText, id.toInt());
+                    nodeStack.push(childNode);
                 }
                 break;
             case QXmlStreamReader::EndElement:
@@ -60,5 +58,9 @@ MmNode* MmLoader::load(QDir baseDir)
         }
     }
 
-    return &superRoot->getChild(0);
+    MmNodeWidget * root = superRoot->getChild(0);
+    root->setParent(NULL);
+    delete superRoot;
+
+    return root;
 }

@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include <QBoxLayout>
 #include <QLabel>
 #include <QPainter>
@@ -7,7 +8,7 @@
 
 #include "mmwidget.h"
 #include "common.h"
-
+#include "mmloader.h"
 
 MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     : m_settings(settings)
@@ -24,6 +25,19 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     connect(&m_editor, SIGNAL(editAccepted()), this, SLOT(editAccepted()));
     connect(&m_editor, SIGNAL(editRejected()), this, SLOT(editRejected()));
     m_editor.hide();
+
+    setStyleSheet("border: 1px solid red");
+}
+
+void MmWidget::openMindMap(QString path)
+{
+    try {
+        m_rootNode = MmLoader::load(QDir(path));
+        m_rootNode->setParent(this);
+    }
+    catch(BadFile &ex) {
+        QMessageBox::warning(this, "Could not open mind map.", ex.message());
+    }
 }
 
 MmWidget::~MmWidget()
@@ -31,14 +45,10 @@ MmWidget::~MmWidget()
     delete m_rootNode;
 }
 
-void MmWidget::setData(MmNode *node)
+void MmWidget::setData(MmNodeWidget *node)
 {
     m_rootNode = node;
-    if (layout() != m_rootNode->getLayout()) {
-        delete layout();
-        setLayout(m_rootNode->getLayout());
-    }
-    updateGeometry();
+    m_rootNode->setParent(this);
 }
 
 
@@ -49,7 +59,7 @@ void MmWidget::setBackGround(QColor color)
     setPalette(p);
 }
 
-MmNode* MmWidget::getSelectedNode()
+MmNodeWidget* MmWidget::getSelectedNode()
 {
     return m_selectedNode;
 }
@@ -62,7 +72,7 @@ void MmWidget::editNode()
 void MmWidget::addNode()
 {
     m_bAddNode = true;
-    m_selectedNode = &getSelectedNode()->addChild("");
+    m_selectedNode = getSelectedNode()->addChild("");
     editNode();
 }
 
@@ -78,7 +88,7 @@ void MmWidget::editAccepted()
 void MmWidget::editRejected()
 {
     if (m_bAddNode) {
-        m_selectedNode = getSelectedNode()->getParent();
+        m_selectedNode = static_cast<MmNodeWidget*>(getSelectedNode()->parent());
         m_selectedNode->removeLastChild();
         m_bAddNode = false;
     }

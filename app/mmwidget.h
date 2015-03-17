@@ -19,10 +19,12 @@ public:
     explicit MmWidget(QSettings &settings, QWidget *parent = 0);
     ~MmWidget();
     void setBackGround(QColor color);
-    void setData(MmNode *node);
-    MmNode* getSelectedNode();
+    void setData(MmNodeWidget *node);
+    MmNodeWidget* getSelectedNode();
     void editNode();
     void addNode();
+
+    void openMindMap(QString path);
 
     //Constants
 public:
@@ -36,8 +38,8 @@ public slots:
 
 private:
     QSettings          &m_settings;
-    MmNode             *m_rootNode;
-    MmNode             *m_selectedNode;
+    MmNodeWidget             *m_rootNode;
+    MmNodeWidget             *m_selectedNode;
     QPen                m_blackPen;
     MmTextEdit          m_editor;
     bool                m_bAddNode;

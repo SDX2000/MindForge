@@ -61,7 +61,7 @@ void MmMainWindow::on_actionOptions_triggered()
 void MmMainWindow::openMindMap(QString path)
 {
     try {
-        MmNode* root = MmLoader::load(QDir(path));
+        MmNodeWidget* root = MmLoader::load(QDir(path));
         m_mindMapWidget.setData(root);
         updateGeometry();
     }

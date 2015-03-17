@@ -2,14 +2,14 @@
 #include "mmnode.h"
 
 
-int MmNode::sm_lastId = 0;
+int MmNodeWidget::sm_lastId = 0;
 
 static const int XMARGIN = 30;
 static const int YMARGIN = 27;
 
 
-MmNode::MmNode(MmNode *parent)
-    : m_parent(parent)
+MmNodeWidget::MmNodeWidget(QWidget *parent)
+    : QWidget(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
     , m_pHBox(new QHBoxLayout())
@@ -17,10 +17,14 @@ MmNode::MmNode(MmNode *parent)
     , m_pLabel(new QLabel())
 {
     m_id = ++sm_lastId;
+    setStyleSheet("border: 1px solid red");
+    setLayout(m_pHBox);
+    m_pHBox->addWidget(m_pLabel);
+    m_pHBox->addLayout(m_pVBox);
 }
 
-MmNode::MmNode(QString text, MmNode *parent)
-    : m_parent(parent)
+MmNodeWidget::MmNodeWidget(QString text, QWidget *parent)
+    : QWidget(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
     , m_pHBox(new QHBoxLayout())
@@ -30,12 +34,16 @@ MmNode::MmNode(QString text, MmNode *parent)
 {
     m_pLabel->setText(text);
     m_id = ++sm_lastId;
+    setStyleSheet("border: 1px solid red");
+    setLayout(m_pHBox);
+    m_pHBox->addWidget(m_pLabel);
+    m_pHBox->addLayout(m_pVBox);
 }
 
 
-MmNode::MmNode(QString text, int id, MmNode *parent)
+MmNodeWidget::MmNodeWidget(QString text, int id, QWidget *parent)
     : m_id(id)
-    , m_parent(parent)
+    , QWidget(parent)
     , m_xMargin(XMARGIN)
     , m_yMargin(YMARGIN)
     , m_pHBox(new QHBoxLayout())
@@ -44,97 +52,79 @@ MmNode::MmNode(QString text, int id, MmNode *parent)
 {
     m_pLabel->setText(text);
     sm_lastId = max(sm_lastId, id);
+    setStyleSheet("border: 1px solid red");
+    setLayout(m_pHBox);
+    m_pHBox->addWidget(m_pLabel);
+    m_pHBox->addLayout(m_pVBox);
 }
 
-MmNode::~MmNode()
+MmNodeWidget::~MmNodeWidget()
 {
 }
 
-QString MmNode::getText() const
+QString MmNodeWidget::getText() const
 {
     return m_pLabel->text();
 }
 
-void MmNode::setText(QString text)
+void MmNodeWidget::setText(QString text)
 {
     m_pLabel->setText(text);
 }
 
-int MmNode::getId() const
+int MmNodeWidget::getId() const
 {
     return m_id;
 }
 
-MmNode* MmNode::getParent() const
+MmNodeWidget* MmNodeWidget::addChild(QString text)
 {
-    return m_parent;
-}
-
-
-MmNode& MmNode::addChild(QString text)
-{
-    m_children.push_back(MmNode(text, this));
-    return m_children[m_children.size() - 1];
-
-    m_children.push_back(MmNode(text, this));
-    MmNode &node = m_children[m_children.size() - 1];
+    MmNodeWidget *node = new MmNodeWidget(text);
+    m_children.push_back(node);
 
     if(m_pVBox->count()) {
         m_pVBox->addSpacing(m_yMargin);
     }
 
-    m_pVBox->addLayout(node.m_pHBox);
+    m_pVBox->addWidget(node);
+
     return node;
 }
 
-MmNode& MmNode::addChild(QString text, int id)
+MmNodeWidget* MmNodeWidget::addChild(QString text, int id)
 {
-    m_children.push_back(MmNode(text, id, this));
-    return m_children[m_children.size() - 1];
+    MmNodeWidget *node = new MmNodeWidget(text, id);
+    m_children.push_back(node);
+    m_pVBox->addWidget(node);
+    return node;
 }
 
-void MmNode::removeLastChild()
+void MmNodeWidget::removeLastChild()
 {
     m_children.pop_back();
 }
 
-MmNode& MmNode::getChild(int index)
+MmNodeWidget* MmNodeWidget::getChild(int index)
 {
     return m_children.at(index);
 }
 
-int MmNode::yMargin()
+int MmNodeWidget::yMargin()
 {
     return m_yMargin;
 }
 
-int MmNode::xMargin()
+int MmNodeWidget::xMargin()
 {
     return m_xMargin;
 }
 
-void MmNode::setYMargin(int margin)
+void MmNodeWidget::setYMargin(int margin)
 {
     m_yMargin = margin;
 }
 
-void MmNode::setXMargin(int margin)
+void MmNodeWidget::setXMargin(int margin)
 {
     m_xMargin = margin;
-}
-
-//const MmNode& MmNode::operator = (const MmNode& rhs)
-//{
-//    m_children  = rhs.m_children;
-//    m_id        = rhs.m_id;
-//    m_parent    = rhs.m_parent;
-//    m_xMargin   = rhs.m_xMargin;
-//    m_yMargin   = rhs.m_yMargin;
-
-//    return *this;
-//}
-
-QLayout* MmNode::getLayout()
-{
-    return m_pHBox;
 }

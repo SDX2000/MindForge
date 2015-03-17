@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     app.setFont(font);
 
     MmMainWindow w;
+//    QSettings settings;
+//    MmWidget w(settings);
 
     w.openMindMap("C:\\Source\\C++\\Qt\\MindForge\\test\\input\\basic2");
 
