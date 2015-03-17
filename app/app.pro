@@ -12,10 +12,11 @@ SOURCES += \
     mainwindow.cpp \
     mmtextedit.cpp \
     mmloader.cpp \
-    mmnode.cpp
+    mmnode.cpp \
+    utils.cpp
     
 HEADERS += \
-    common.h \
+    utils.h \
     mmwidget.h \
     optionsdialog.h \
     mainwindow.h \
