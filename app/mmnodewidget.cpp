@@ -1,3 +1,5 @@
+#include <QPainter>
+
 #include "utils.h"
 #include "mmnodewidget.h"
 
@@ -30,20 +32,26 @@ void MmNodeWidget::init(QString text, int id)
 {
     m_xMargin = XMARGIN;
     m_yMargin = YMARGIN;
-    m_pHBox = new QHBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
     m_pVBox = new QVBoxLayout();
     m_pLabel = new QLabel();
     m_id = id;
     sm_lastId = max(sm_lastId, id);
 
+    QVBoxLayout *vbox1 = new QVBoxLayout();
+    vbox1->addStretch();
+    vbox1->addWidget(m_pLabel);
+    vbox1->addStretch();
+
     m_pLabel->setText(text);
 
-    m_pHBox->addWidget(m_pLabel);
-    m_pHBox->addSpacing(m_xMargin);
-    m_pHBox->addLayout(m_pVBox);
+    //m_pHBox->addWidget(m_pLabel);
+    hbox->addLayout(vbox1);
+    hbox->addSpacing(m_xMargin);
+    hbox->addLayout(m_pVBox);
 
     //setStyleSheet("border: 1px solid red");
-    setLayout(m_pHBox);
+    setLayout(hbox);
 }
 
 MmNodeWidget::~MmNodeWidget()
@@ -63,6 +71,38 @@ void MmNodeWidget::setText(QString text)
 int MmNodeWidget::getId() const
 {
     return m_id;
+}
+
+void MmNodeWidget::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+
+    painter.setPen(QPen(Qt::black, 2));
+
+    QRect rect = m_pLabel->geometry().translated(0, 2);
+
+    painter.drawLine(rect.bottomLeft(), rect.bottomRight());
+
+    for (int i = 0; i < m_children.size(); ++i) {
+        MmNodeWidget *child = m_children[i];
+
+        QRect crect = ::mapToParent(child, child->m_pLabel->geometry())
+                      .translated(0, 2);
+
+        const int cpX = rect.right() + xMargin()/2;
+
+        QPoint start(rect.bottomRight());
+        QPoint cp1(cpX, rect.bottom());
+        QPoint cp2(cpX, crect.bottom());
+        QPoint end(crect.bottomLeft());
+
+        QPainterPath path;
+        path.moveTo(start);
+        path.cubicTo(cp1, cp2, end);
+
+        painter.drawPath(path);
+    }
 }
 
 MmNodeWidget* MmNodeWidget::addChild(QString text)

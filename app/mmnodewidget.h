@@ -40,13 +40,15 @@ public:
 
     int getId() const;
 
+protected:
+    void paintEvent(QPaintEvent *);
+
 private:
     void init(QString text, int id);
 
 private:
     std::vector<MmNodeWidget*>  m_children;
     int                         m_id;
-    QHBoxLayout                *m_pHBox;
     QVBoxLayout                *m_pVBox;
     QLabel                     *m_pLabel;
 

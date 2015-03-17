@@ -14,3 +14,9 @@ QString readAllText(QString filePath)
     QTextStream in(&file);
     return in.readAll();
 }
+
+QRect mapToParent(QWidget *widget, QRect r)
+{
+    return QRect(widget->mapToParent(r.topLeft())
+                 , widget->mapToParent(r.bottomRight()));
+}

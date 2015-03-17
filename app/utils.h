@@ -3,6 +3,8 @@
 
 #include <QDebug>
 #include <QString>
+#include <QRect>
+#include <QWidget>
 
 template <typename T>
 void safe_delete(T *&ptr)
@@ -25,6 +27,8 @@ T min(T t, T u)
 }
 
 QString readAllText(QString filePath);
+
+QRect mapToParent(QWidget *widget, QRect r);
 
 #define QDBG        qDebug().nospace()
 #define SHOW(X)     #X "=" << (X) <<", "

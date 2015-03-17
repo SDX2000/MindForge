@@ -2,6 +2,7 @@
 - Add support for editing nodes.
 - Add support for saving the mindmap.
 - Implement node selection/deselection using keyboard and mouse.
+- Make xMargin and yMargin class constants. Individual nodes probably do not need their own custom margins.
 
 LONG TERM
 - Replace the call to drawText word-wrapping with a custom word wrapping routine.
