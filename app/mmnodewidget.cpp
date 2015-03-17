@@ -1,5 +1,5 @@
 #include "utils.h"
-#include "mmnode.h"
+#include "mmnodewidget.h"
 
 
 int MmNodeWidget::sm_lastId = 0;

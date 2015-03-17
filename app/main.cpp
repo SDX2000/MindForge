@@ -5,7 +5,7 @@
 
 #include "mainwindow.h"
 #include "mmwidget.h"
-#include "mmnode.h"
+#include "mmnodewidget.h"
 
 
 int main(int argc, char *argv[])

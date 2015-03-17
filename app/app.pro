@@ -11,9 +11,9 @@ SOURCES += \
     optionsdialog.cpp \
     mainwindow.cpp \
     mmtextedit.cpp \
-    mmnode.cpp \
     utils.cpp \
-    exceptions.cpp
+    exceptions.cpp \
+    mmnodewidget.cpp
     
 HEADERS += \
     utils.h \
@@ -21,8 +21,8 @@ HEADERS += \
     optionsdialog.h \
     mainwindow.h \
     mmtextedit.h \
-    mmnode.h \
-    exceptions.h
+    exceptions.h \
+    mmnodewidget.h
     
 FORMS += \
     optionsdialog.ui \

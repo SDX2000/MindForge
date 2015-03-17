@@ -2,7 +2,7 @@
 #define MINDMAPWIDGET_H
 
 
-#include "mmnode.h"
+#include "mmnodewidget.h"
 
 #include "mmtextedit.h"
 
