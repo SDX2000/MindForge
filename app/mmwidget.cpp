@@ -31,7 +31,7 @@ MmWidget::MmWidget(QSettings &settings, QWidget *parent)
     connect(&m_editor, SIGNAL(editRejected()), this, SLOT(editRejected()));
     m_editor.hide();
 
-    setStyleSheet("border: 1px solid red");
+    //setStyleSheet("border: 1px solid red");
 }
 
 MmNodeWidget* MmWidget::load(QDir baseDir)

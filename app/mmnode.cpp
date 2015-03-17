@@ -42,7 +42,7 @@ void MmNodeWidget::init(QString text, int id)
     m_pHBox->addSpacing(m_xMargin);
     m_pHBox->addLayout(m_pVBox);
 
-    setStyleSheet("border: 1px solid red");
+    //setStyleSheet("border: 1px solid red");
     setLayout(m_pHBox);
 }
 
