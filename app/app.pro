@@ -15,6 +15,7 @@ SOURCES += \
     mmnode.cpp
     
 HEADERS += \
+    common.h \
     mmwidget.h \
     optionsdialog.h \
     mainwindow.h \
