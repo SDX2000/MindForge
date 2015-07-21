@@ -82,7 +82,12 @@ void MmNodeWidget::paintEvent(QPaintEvent *)
 
     QRect rect = m_pLabel->geometry().translated(0, 2);
 
-    painter.drawLine(rect.bottomLeft(), rect.bottomRight());
+    int width = m_pLabel->fontMetrics().boundingRect(m_pLabel->text()).width();
+
+    QPoint p = rect.bottomLeft();
+    p += QPoint(width, 0);
+
+    painter.drawLine(rect.bottomLeft(), p);
 
     for (int i = 0; i < m_children.size(); ++i) {
         MmNodeWidget *child = m_children[i];
